@@ -49,7 +49,7 @@ export default function ProductCard({ product, layout = 'vertical' }: ProductCar
     switch(condition) {
         case 'new': return 'default';
         case 'used': return 'secondary';
-        case 'refurbished': return 'outline';
+        case 'refurbished': return 'secondary';
         default: return 'secondary';
     }
   }
