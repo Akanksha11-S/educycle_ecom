@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -12,8 +13,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
 import { ProductCondition } from '@/lib/types';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Upload } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import Image from 'next/image';
 
 const productCategories = ["Textbooks", "Calculators", "Engineering Graphic Materials", "Notebooks", "Other Accessories"];
 
@@ -28,8 +30,8 @@ export default function NewProductPage() {
   const [price, setPrice] = useState(0);
   const [category, setCategory] = useState('');
   const [condition, setCondition] = useState<ProductCondition>('used');
-  const [imageUrls, setImageUrls] = useState(['https://picsum.photos/seed/newitem/600/400']);
-  const [imageHint, setImageHint] = useState('new item');
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
+  const [imageHint, setImageHint] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   if (!currentUser || currentUser.role !== 'seller') {
@@ -38,11 +40,36 @@ export default function NewProductPage() {
     return null;
   }
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const files = Array.from(e.target.files);
+      const newImageUrls: string[] = [];
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (readEvent) => {
+          if (readEvent.target?.result) {
+            newImageUrls.push(readEvent.target.result as string);
+            // For simplicity, we'll just show the last image selected in the preview
+            if (newImageUrls.length === files.length) {
+              setImageUrls(newImageUrls);
+            }
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+  };
+
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!category) {
         toast({ title: "Category is required", variant: "destructive" });
         return;
+    }
+     if (imageUrls.length === 0) {
+      toast({ title: "Image is required", description: "Please upload at least one image.", variant: "destructive" });
+      return;
     }
     setIsLoading(true);
     // Simulate API call
@@ -62,6 +89,22 @@ export default function NewProductPage() {
         </CardHeader>
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-6">
+             <div className="space-y-2">
+                <Label htmlFor="image-upload">Product Image</Label>
+                <div className="flex items-center gap-4">
+                  <div className="w-1/3 h-32 border-dashed border-2 rounded-lg flex items-center justify-center bg-muted">
+                    {imageUrls.length > 0 ? (
+                      <Image src={imageUrls[0]} alt="preview" width={128} height={128} className="object-contain rounded-lg h-full w-full" />
+                    ) : (
+                      <Upload className="h-8 w-8 text-muted-foreground" />
+                    )}
+                  </div>
+                  <div className="w-2/3">
+                    <Input id="image-upload" type="file" onChange={handleImageChange} disabled={isLoading} accept="image/*" />
+                    <p className="text-xs text-muted-foreground mt-2">Upload a clear picture of your item. First image will be the main one.</p>
+                  </div>
+                </div>
+              </div>
             <div className="space-y-2">
               <Label htmlFor="name">Product Name</Label>
               <Input id="name" required value={name} onChange={(e) => setName(e.target.value)} disabled={isLoading} />
@@ -105,9 +148,6 @@ export default function NewProductPage() {
                         <Label htmlFor="r-refurbished" className="font-normal">Refurbished</Label>
                     </div>
                 </RadioGroup>
-            </div>
-            <div className="text-sm text-muted-foreground">
-                Note: Image upload is not implemented in this demo. A placeholder image will be used.
             </div>
           </CardContent>
           <CardContent className="flex justify-end gap-4">
