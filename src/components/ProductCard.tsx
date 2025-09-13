@@ -38,10 +38,11 @@ export default function ProductCard({ product, layout = 'vertical' }: ProductCar
         toast({ title: "Please log in", description: "You must be logged in to manage your wishlist.", variant: "destructive" });
         return;
     }
+    const isWishlisted = isInWishlist(product.id);
     toggleWishlist(product.id);
     toast({
-        title: isInWishlist(product.id) ? "Removed from wishlist" : "Added to wishlist",
-        description: `${product.name} has been ${isInWishlist(product.id) ? 'removed from' : 'added to'} your wishlist.`
+        title: !isWishlisted ? "Added to wishlist" : "Removed from wishlist",
+        description: `${product.name} has been ${!isWishlisted ? 'added to' : 'removed from'} your wishlist.`
     });
   };
 
@@ -61,7 +62,7 @@ export default function ProductCard({ product, layout = 'vertical' }: ProductCar
           <div className="flex flex-col sm:flex-row">
             <div className="relative sm:w-1/3">
               <Image
-                src={product.imageUrl}
+                src={product.imageUrls[0]}
                 alt={product.name}
                 data-ai-hint={product.imageHint}
                 width={400}
@@ -99,12 +100,12 @@ export default function ProductCard({ product, layout = 'vertical' }: ProductCar
       <Card className="h-full flex flex-col overflow-hidden transition-shadow duration-300 hover:shadow-xl">
         <CardHeader className="p-0 relative">
           <Image
-            src={product.imageUrl}
+            src={product.imageUrls[0]}
             alt={product.name}
             data-ai-hint={product.imageHint}
             width={400}
             height={300}
-            className="w-full h-48 object-cover"
+            className="w-full h-48 object-contain"
           />
           <Badge variant={conditionBadgeVariant(product.condition)} className="absolute top-2 right-2 capitalize">{product.condition}</Badge>
         </CardHeader>

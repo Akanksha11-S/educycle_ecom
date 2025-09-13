@@ -25,7 +25,7 @@ export default function NewProductPage() {
   const [price, setPrice] = useState(0);
   const [category, setCategory] = useState('');
   const [condition, setCondition] = useState<ProductCondition>('used');
-  const [imageUrl, setImageUrl] = useState('https://picsum.photos/seed/newitem/400/300');
+  const [imageUrls, setImageUrls] = useState(['https://picsum.photos/seed/newitem/600/400']);
   const [imageHint, setImageHint] = useState('new item');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -40,7 +40,7 @@ export default function NewProductPage() {
     setIsLoading(true);
     // Simulate API call
     setTimeout(() => {
-        addProduct({ name, description, price, category, condition, imageUrl, imageHint }, currentUser.id);
+        addProduct({ name, description, price, category, condition, imageUrls, imageHint }, currentUser.id);
         toast({ title: "Product Listed!", description: `${name} is now for sale.` });
         router.push('/dashboard');
     }, 1000);

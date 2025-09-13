@@ -57,8 +57,8 @@ export default function CartPage() {
           {cartProducts.map(item => (
             <Card key={item.id} className="overflow-hidden">
               <CardContent className="p-4 flex flex-col sm:flex-row gap-4">
-                <div className="w-full sm:w-1/3">
-                  <Image src={item.imageUrl!} alt={item.name!} width={200} height={150} className="rounded-md object-cover w-full h-auto" data-ai-hint={item.imageHint} />
+                <div className="w-full sm:w-1/3 flex items-center justify-center bg-gray-50 rounded-md">
+                  <Image src={item.imageUrls![0]} alt={item.name!} width={200} height={150} className="rounded-md object-contain w-full h-auto" data-ai-hint={item.imageHint} />
                 </div>
                 <div className="flex-grow flex flex-col justify-between">
                   <div>

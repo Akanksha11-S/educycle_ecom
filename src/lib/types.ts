@@ -18,7 +18,7 @@ export type Product = {
   price: number;
   category: string;
   condition: ProductCondition;
-  imageUrl: string;
+  imageUrls: string[];
   imageHint: string;
   sellerId: string;
   sellerName?: string; // Denormalized for convenience
