@@ -9,6 +9,7 @@ import { Search } from 'lucide-react';
 import type { Product } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { List } from 'lucide-react';
 
 const HeroSection = () => (
     <div className="text-center py-16 md:py-24 px-4 bg-card rounded-xl shadow-sm mb-12">
@@ -74,8 +75,8 @@ export default function Home() {
   return (
     <>
       <HeroSection />
-      <div className="flex flex-col md:flex-row gap-8" id="products">
-        <aside className="w-full md:w-1/4 lg:w-1/5">
+      <div className="flex flex-col md:flex-row gap-12" id="products">
+        <aside className="w-full md:w-1/3 lg:w-1/4">
           <div className="sticky top-24">
             <h2 className="font-headline text-2xl mb-4">Filter & Sort</h2>
             <div className="relative mb-6">
@@ -97,12 +98,15 @@ export default function Home() {
             />
           </div>
         </aside>
-        <section className="w-full md:w-3/4 lg:w-4/5">
-          <h2 className="font-headline text-4xl mb-6">For Sale</h2>
+        <section className="w-full md:w-2/3 lg:w-3/4">
+          <h2 className="font-headline text-4xl mb-6 flex items-center gap-3">
+            <List className="h-8 w-8" />
+            For Sale
+          </h2>
           {filteredAndSortedProducts.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="flex flex-col gap-6">
               {filteredAndSortedProducts.map((product: Product) => (
-                <ProductCard key={product.id} product={product} />
+                <ProductCard key={product.id} product={product} layout="horizontal" />
               ))}
             </div>
           ) : (

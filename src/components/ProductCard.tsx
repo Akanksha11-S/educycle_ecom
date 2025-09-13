@@ -14,9 +14,10 @@ import type { Product } from '@/lib/types';
 
 interface ProductCardProps {
   product: Product;
+  layout?: 'vertical' | 'horizontal';
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, layout = 'vertical' }: ProductCardProps) {
   const { addToCart, toggleWishlist, isInWishlist } = useDataContext();
   const { currentUser } = useAuth();
   const { toast } = useToast();
@@ -51,6 +52,46 @@ export default function ProductCard({ product }: ProductCardProps) {
         case 'refurbished': return 'outline';
         default: return 'secondary';
     }
+  }
+
+  if (layout === 'horizontal') {
+    return (
+      <Link href={`/products/${product.id}`} className="group">
+        <Card className="overflow-hidden transition-shadow duration-300 hover:shadow-xl">
+          <div className="flex flex-col sm:flex-row">
+            <div className="relative sm:w-1/3">
+              <Image
+                src={product.imageUrl}
+                alt={product.name}
+                data-ai-hint={product.imageHint}
+                width={400}
+                height={300}
+                className="w-full h-48 sm:h-full object-cover"
+              />
+              <Badge variant={conditionBadgeVariant(product.condition)} className="absolute top-2 right-2 capitalize">{product.condition}</Badge>
+            </div>
+            <div className="flex flex-col sm:w-2/3">
+              <CardContent className="p-4 flex-grow">
+                <CardTitle className="font-headline text-lg leading-tight mb-2">{product.name}</CardTitle>
+                <p className="text-sm text-muted-foreground mb-2 line-clamp-2">{product.description}</p>
+                 <p className="text-sm text-muted-foreground">Sold by {product.sellerName}</p>
+              </CardContent>
+              <CardFooter className="p-4 flex justify-between items-center">
+                <p className="text-2xl font-bold font-headline text-primary">₹{product.price.toFixed(2)}</p>
+                <div className="flex items-center gap-1">
+                  <Button variant="ghost" size="icon" onClick={handleToggleWishlist} className="h-9 w-9">
+                      <Heart className={cn("h-5 w-5 text-muted-foreground", isInWishlist(product.id) ? 'fill-red-500 text-red-500' : '')} />
+                  </Button>
+                  <Button variant="outline" size="icon" onClick={handleAddToCart} className="h-9 w-9">
+                    <ShoppingCart className="h-5 w-5" />
+                  </Button>
+                </div>
+              </CardFooter>
+            </div>
+          </div>
+        </Card>
+      </Link>
+    )
   }
 
   return (
