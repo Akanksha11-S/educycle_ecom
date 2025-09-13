@@ -56,24 +56,28 @@ export default function CartPage() {
         <div className="lg:col-span-2 space-y-4">
           {cartProducts.map(item => (
             <Card key={item.id} className="overflow-hidden">
-              <CardContent className="p-4 flex gap-4 items-center">
-                <Image src={item.imageUrl!} alt={item.name!} width={120} height={90} className="rounded-md object-cover" data-ai-hint={item.imageHint} />
-                <div className="flex-grow">
-                  <Link href={`/products/${item.id}`} className="font-bold hover:underline">{item.name}</Link>
-                  <p className="text-sm text-muted-foreground">Sold by {item.sellerName}</p>
-                  <p className="text-lg font-headline text-primary mt-1">₹{item.price?.toFixed(2)}</p>
+              <CardContent className="p-4 flex flex-col sm:flex-row gap-4">
+                <div className="w-full sm:w-1/3">
+                  <Image src={item.imageUrl!} alt={item.name!} width={200} height={150} className="rounded-md object-cover w-full h-auto" data-ai-hint={item.imageHint} />
                 </div>
-                <div className="flex items-center gap-4">
-                  <Input
-                    type="number"
-                    min="1"
-                    value={item.quantity}
-                    onChange={(e) => updateCartQuantity(item.id!, parseInt(e.target.value))}
-                    className="w-20 text-center"
-                  />
-                  <Button variant="ghost" size="icon" onClick={() => removeFromCart(item.id!)}>
-                    <Trash2 className="h-5 w-5 text-destructive" />
-                  </Button>
+                <div className="flex-grow flex flex-col justify-between">
+                  <div>
+                    <Link href={`/products/${item.id}`} className="font-bold hover:underline">{item.name}</Link>
+                    <p className="text-sm text-muted-foreground">Sold by {item.sellerName}</p>
+                    <p className="text-lg font-headline text-primary mt-1">₹{item.price?.toFixed(2)}</p>
+                  </div>
+                  <div className="flex items-center justify-between mt-4">
+                    <Input
+                      type="number"
+                      min="1"
+                      value={item.quantity}
+                      onChange={(e) => updateCartQuantity(item.id!, parseInt(e.target.value))}
+                      className="w-20 text-center"
+                    />
+                    <Button variant="ghost" size="icon" onClick={() => removeFromCart(item.id!)}>
+                      <Trash2 className="h-5 w-5 text-destructive" />
+                    </Button>
+                  </div>
                 </div>
               </CardContent>
             </Card>

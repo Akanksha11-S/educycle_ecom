@@ -104,9 +104,9 @@ export default function Home() {
             For Sale
           </h2>
           {filteredAndSortedProducts.length > 0 ? (
-            <div className="flex flex-col gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
               {filteredAndSortedProducts.map((product: Product) => (
-                <ProductCard key={product.id} product={product} layout="horizontal" />
+                <ProductCard key={product.id} product={product} />
               ))}
             </div>
           ) : (
