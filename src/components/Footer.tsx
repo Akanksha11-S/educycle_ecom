@@ -1,4 +1,4 @@
-import { MapPin } from 'lucide-react';
+import { MapPin, BookOpen, Coffee } from 'lucide-react';
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -10,7 +10,10 @@ const Footer = () => {
                 <div className="grid md:grid-cols-2 gap-8">
                     <Card>
                         <CardHeader>
-                            <CardTitle className="font-headline text-xl">Good Luck Stationary Shop</CardTitle>
+                            <CardTitle className="font-headline text-xl flex items-center gap-2">
+                                <BookOpen className="h-5 w-5 text-primary" />
+                                Good Luck Stationary Shop
+                            </CardTitle>
                             <CardDescription>Your one-stop shop for all engineering supplies.</CardDescription>
                         </CardHeader>
                         <CardContent>
@@ -26,7 +29,10 @@ const Footer = () => {
                     </Card>
                     <Card>
                         <CardHeader>
-                            <CardTitle className="font-headline text-xl">Relish Café</CardTitle>
+                            <CardTitle className="font-headline text-xl flex items-center gap-2">
+                                <Coffee className="h-5 w-5 text-primary" />
+                                Relish Café
+                            </CardTitle>
                             <CardDescription>Fuel your study sessions with the best coffee on campus.</CardDescription>
                         </CardHeader>
                         <CardContent>
