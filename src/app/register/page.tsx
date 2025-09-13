@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -69,6 +70,10 @@ export default function RegisterPage() {
                     <div className="flex items-center space-x-2">
                         <RadioGroupItem value="seller" id="r-seller" />
                         <Label htmlFor="r-seller" className="font-normal">Seller</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="admin" id="r-admin" />
+                        <Label htmlFor="r-admin" className="font-normal">Admin</Label>
                     </div>
                 </RadioGroup>
             </div>
