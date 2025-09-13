@@ -1,0 +1,88 @@
+"use client";
+
+import Image from 'next/image';
+import Link from 'next/link';
+import { useDataContext } from '@/contexts/DataContext';
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/hooks/use-toast';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Heart, ShoppingCart } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import type { Product } from '@/lib/types';
+
+interface ProductCardProps {
+  product: Product;
+}
+
+export default function ProductCard({ product }: ProductCardProps) {
+  const { addToCart, toggleWishlist, isInWishlist } = useDataContext();
+  const { currentUser } = useAuth();
+  const { toast } = useToast();
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!currentUser) {
+        toast({ title: "Please log in", description: "You must be logged in to add items to your cart.", variant: "destructive" });
+        return;
+    }
+    addToCart(product.id);
+    toast({ title: "Added to cart!", description: `${product.name} is now in your cart.` });
+  };
+
+  const handleToggleWishlist = (e: React.MouseEvent) => {
+    e.preventDefault();
+     if (!currentUser) {
+        toast({ title: "Please log in", description: "You must be logged in to manage your wishlist.", variant: "destructive" });
+        return;
+    }
+    toggleWishlist(product.id);
+    toast({
+        title: isInWishlist(product.id) ? "Removed from wishlist" : "Added to wishlist",
+        description: `${product.name} has been ${isInWishlist(product.id) ? 'removed from' : 'added to'} your wishlist.`
+    });
+  };
+
+  const conditionBadgeVariant = (condition: Product['condition']) => {
+    switch(condition) {
+        case 'new': return 'default';
+        case 'used': return 'secondary';
+        case 'refurbished': return 'outline';
+        default: return 'secondary';
+    }
+  }
+
+  return (
+    <Link href={`/products/${product.id}`} className="group">
+      <Card className="h-full flex flex-col overflow-hidden transition-shadow duration-300 hover:shadow-xl">
+        <CardHeader className="p-0 relative">
+          <Image
+            src={product.imageUrl}
+            alt={product.name}
+            data-ai-hint={product.imageHint}
+            width={400}
+            height={300}
+            className="w-full h-48 object-cover"
+          />
+          <Badge variant={conditionBadgeVariant(product.condition)} className="absolute top-2 right-2 capitalize">{product.condition}</Badge>
+        </CardHeader>
+        <CardContent className="p-4 flex-grow">
+          <CardTitle className="font-headline text-lg leading-tight mb-2 h-10 overflow-hidden">{product.name}</CardTitle>
+          <p className="text-sm text-muted-foreground">Sold by {product.sellerName}</p>
+        </CardContent>
+        <CardFooter className="p-4 flex justify-between items-center">
+          <p className="text-xl font-bold font-headline text-primary">${product.price.toFixed(2)}</p>
+          <div className="flex items-center gap-1">
+             <Button variant="ghost" size="icon" onClick={handleToggleWishlist} className="h-9 w-9">
+                <Heart className={cn("h-5 w-5 text-muted-foreground", isInWishlist(product.id) ? 'fill-red-500 text-red-500' : '')} />
+             </Button>
+            <Button variant="outline" size="icon" onClick={handleAddToCart} className="h-9 w-9">
+              <ShoppingCart className="h-5 w-5" />
+            </Button>
+          </div>
+        </CardFooter>
+      </Card>
+    </Link>
+  );
+}

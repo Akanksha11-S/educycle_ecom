@@ -1,3 +1,64 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "textbook-physics",
+      "description": "University Physics textbook",
+      "imageUrl": "https://picsum.photos/seed/physics/400/300",
+      "imageHint": "physics textbook"
+    },
+    {
+      "id": "textbook-calculus",
+      "description": "Calculus: Early Transcendentals textbook",
+      "imageUrl": "https://picsum.photos/seed/calculus/400/300",
+      "imageHint": "math textbook"
+    },
+    {
+      "id": "laptop-1",
+      "description": "Used Macbook Air",
+      "imageUrl": "https://picsum.photos/seed/laptop1/400/300",
+      "imageHint": "laptop computer"
+    },
+    {
+      "id": "textbook-chemistry",
+      "description": "General Chemistry textbook",
+      "imageUrl": "https://picsum.photos/seed/chemistry/400/300",
+      "imageHint": "chemistry textbook"
+    },
+    {
+      "id": "textbook-literature",
+      "description": "The Norton Anthology of English Literature",
+      "imageUrl": "https://picsum.photos/seed/literature/400/300",
+      "imageHint": "literature book"
+    },
+    {
+      "id": "drafting-table",
+      "description": "Adjustable drafting table for artists and architects",
+      "imageUrl": "https://picsum.photos/seed/drafting/400/300",
+      "imageHint": "drafting table"
+    },
+    {
+      "id": "user-akanksha",
+      "description": "Avatar for Akanksha",
+      "imageUrl": "https://picsum.photos/seed/akanksha/100/100",
+      "imageHint": "woman smiling"
+    },
+    {
+      "id": "user-bob",
+      "description": "Avatar for Bob",
+      "imageUrl": "https://picsum.photos/seed/bob/100/100",
+      "imageHint": "man portrait"
+    },
+    {
+      "id": "user-charlie",
+      "description": "Avatar for Charlie",
+      "imageUrl": "https://picsum.photos/seed/charlie/100/100",
+      "imageHint": "person glasses"
+    },
+    {
+      "id": "user-diana",
+      "description": "Avatar for Diana",
+      "imageUrl": "https://picsum.photos/seed/diana/100/100",
+      "imageHint": "woman portrait"
+    }
+  ]
 }
