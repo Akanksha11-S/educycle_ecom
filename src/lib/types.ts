@@ -7,6 +7,7 @@ export type User = {
   password?: string; // Should not be stored in frontend state in a real app
   role: UserRole;
   avatarUrl: string;
+  isVerified?: boolean;
 };
 
 export type ProductCondition = 'new' | 'used' | 'refurbished';

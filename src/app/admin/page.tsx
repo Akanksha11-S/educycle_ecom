@@ -9,9 +9,11 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useToast } from '@/hooks/use-toast';
-import { Users, IndianRupee, Package } from 'lucide-react';
+import { Users, IndianRupee, Package, CheckCircle, XCircle } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
+import { Switch } from '@/components/ui/switch';
+import { Badge } from '@/components/ui/badge';
+import { Label } from '@/components/ui/label';
 
 const AdminReports = () => {
   const { users } = useAuth();
@@ -103,6 +105,7 @@ const AdminUserManagement = () => {
                             <TableHead>User</TableHead>
                             <TableHead>Email</TableHead>
                             <TableHead>Role</TableHead>
+                            <TableHead>Status</TableHead>
                             <TableHead className="text-right">Actions</TableHead>
                         </TableRow>
                     </TableHeader>
@@ -115,9 +118,17 @@ const AdminUserManagement = () => {
                                         <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
                                     </Avatar>
                                     {user.name}
+                                    {user.isVerified && <CheckCircle className="h-4 w-4 text-green-500" />}
                                 </TableCell>
                                 <TableCell>{user.email}</TableCell>
                                 <TableCell className="capitalize">{user.role}</TableCell>
+                                <TableCell>
+                                    {user.isVerified ? (
+                                        <Badge variant="default" className="bg-green-100 text-green-800">Verified</Badge>
+                                    ) : (
+                                        <Badge variant="secondary">Not Verified</Badge>
+                                    )}
+                                </TableCell>
                                 <TableCell className="text-right">
                                     {user.role !== 'admin' && <Button variant="destructive" size="sm" onClick={() => handleDelete(user.id, user.name)}>Delete</Button>}
                                 </TableCell>
@@ -129,6 +140,60 @@ const AdminUserManagement = () => {
         </Card>
     )
 }
+
+const AdminUserVerification = () => {
+    const { users, toggleUserVerification } = useAuth();
+    const { toast } = useToast();
+
+    const handleVerificationChange = (userId: string, userName: string, isVerified: boolean) => {
+        toggleUserVerification(userId);
+        toast({ title: 'User Verification Updated', description: `${userName} is now ${isVerified ? 'verified' : 'unverified'}.` });
+    };
+
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle>User Verification</CardTitle>
+                <CardDescription>Toggle verification status for users.</CardDescription>
+            </CardHeader>
+            <CardContent>
+                 <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>User</TableHead>
+                            <TableHead>Role</TableHead>
+                            <TableHead className="text-right">Verification Status</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {users.map(user => (
+                            <TableRow key={user.id}>
+                                <TableCell className="font-medium">{user.name}</TableCell>
+                                <TableCell className="capitalize">{user.role}</TableCell>
+                                <TableCell className="text-right">
+                                    {user.role !== 'admin' ? (
+                                      <div className='flex items-center justify-end gap-2'>
+                                        <Label htmlFor={`verify-${user.id}`} className='text-sm font-normal'>
+                                          {user.isVerified ? 'Verified' : 'Not Verified'}
+                                        </Label>
+                                        <Switch
+                                            id={`verify-${user.id}`}
+                                            checked={user.isVerified}
+                                            onCheckedChange={(checked) => handleVerificationChange(user.id, user.name, checked)}
+                                        />
+                                      </div>
+                                    ) : (
+                                      <Badge>Always Verified</Badge>
+                                    )}
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </CardContent>
+        </Card>
+    );
+};
 
 export default function AdminPage() {
   const { currentUser } = useAuth();
@@ -143,15 +208,19 @@ export default function AdminPage() {
     <div className="space-y-8">
       <h1 className="font-headline text-4xl">Admin Panel</h1>
       <Tabs defaultValue="reports">
-        <TabsList className="grid w-full grid-cols-2">
+        <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="reports">Reports</TabsTrigger>
             <TabsTrigger value="users">User Management</TabsTrigger>
+            <TabsTrigger value="verification">Verification</TabsTrigger>
         </TabsList>
         <TabsContent value="reports" className="mt-6">
             <AdminReports />
         </TabsContent>
         <TabsContent value="users" className="mt-6">
             <AdminUserManagement />
+        </TabsContent>
+        <TabsContent value="verification" className="mt-6">
+            <AdminUserVerification />
         </TabsContent>
       </Tabs>
     </div>

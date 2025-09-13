@@ -13,6 +13,7 @@ interface AuthContextType {
   logout: () => void;
   register: (name: string, email: string, password: string, role: UserRole) => boolean;
   deleteUser: (userId: string) => void;
+  toggleUserVerification: (userId: string) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -47,6 +48,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       password,
       role,
       avatarUrl: `https://picsum.photos/seed/${name}/100/100`,
+      isVerified: false,
     };
     setUsers([...users, newUser]);
     setCurrentUser(newUser);
@@ -57,10 +59,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (currentUser?.role !== 'admin') return;
     setUsers(users.filter(u => u.id !== userId));
   };
+  
+  const toggleUserVerification = (userId: string) => {
+    if (currentUser?.role !== 'admin') return;
+    setUsers(users.map(u => u.id === userId ? { ...u, isVerified: !u.isVerified } : u));
+  }
 
 
   return (
-    <AuthContext.Provider value={{ currentUser, users, login, logout, register, deleteUser }}>
+    <AuthContext.Provider value={{ currentUser, users, login, logout, register, deleteUser, toggleUserVerification }}>
       {children}
     </AuthContext.Provider>
   );

@@ -3,11 +3,12 @@ import type { User } from '@/lib/types';
 export const initialUsers: User[] = [
   {
     id: 'user-1',
-    name: 'Akanksha',
-    email: 'akanksha123@gmail.com',
+    name: 'AkankshaS',
+    email: 'akanksha158@gmail.com',
     password: 'password123',
     role: 'admin',
     avatarUrl: 'https://picsum.photos/seed/akanksha/100/100',
+    isVerified: true,
   },
   {
     id: 'user-2',
@@ -16,6 +17,7 @@ export const initialUsers: User[] = [
     password: 'password123',
     role: 'seller',
     avatarUrl: 'https://picsum.photos/seed/bob/100/100',
+    isVerified: true,
   },
   {
     id: 'user-3',
@@ -24,6 +26,7 @@ export const initialUsers: User[] = [
     password: 'password123',
     role: 'seller',
     avatarUrl: 'https://picsum.photos/seed/charlie/100/100',
+    isVerified: false,
   },
   {
     id: 'user-4',
@@ -32,5 +35,6 @@ export const initialUsers: User[] = [
     password: 'password123',
     role: 'buyer',
     avatarUrl: 'https://picsum.photos/seed/diana/100/100',
+    isVerified: true,
   },
 ];
