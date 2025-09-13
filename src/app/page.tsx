@@ -7,6 +7,39 @@ import ProductFilters from '@/components/ProductFilters';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
 import type { Product } from '@/lib/types';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+
+const HeroSection = () => (
+    <div className="text-center py-16 md:py-24 px-4 bg-card rounded-xl shadow-sm mb-12">
+      <h1 
+        className="font-headline text-4xl md:text-6xl lg:text-7xl leading-tight mb-4 text-primary animate-in fade-in slide-in-from-top-4 duration-700"
+      >
+        Built by Engineers, for Engineers.
+      </h1>
+       <p 
+        className="text-2xl md:text-3xl font-light font-headline text-muted-foreground mb-8 animate-in fade-in slide-in-from-top-2 duration-700"
+        style={{ animationDelay: '200ms' }}
+      >
+        Right Here on Campus.
+      </p>
+      <p 
+        className="max-w-3xl mx-auto text-muted-foreground mb-10 animate-in fade-in duration-700"
+        style={{ animationDelay: '400ms' }}
+      >
+        Welcome to EduCycle, the trusted peer-to-peer platform for our college community. Connect directly with verified students to buy the tools you need or sell the gear you're done with. No shipping, no strangers—just simple, safe exchanges for everything from drawing boards to complete Engineering Graphic kits. This is our campus circular economy.
+      </p>
+      <div 
+        className="animate-in fade-in duration-700"
+        style={{ animationDelay: '600ms' }}
+      >
+        <Button asChild size="lg">
+          <Link href="#products">Start Browsing</Link>
+        </Button>
+      </div>
+    </div>
+);
+
 
 export default function Home() {
   const { products } = useDataContext();
@@ -44,44 +77,47 @@ export default function Home() {
   }, [products, searchTerm, filters, sortOrder]);
 
   return (
-    <div className="flex flex-col md:flex-row gap-8">
-      <aside className="w-full md:w-1/4 lg:w-1/5">
-        <div className="sticky top-24">
-          <h2 className="font-headline text-2xl mb-4">Filter & Sort</h2>
-          <div className="relative mb-6">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-            <Input
-              type="text"
-              placeholder="Search products..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
+    <>
+      <HeroSection />
+      <div className="flex flex-col md:flex-row gap-8" id="products">
+        <aside className="w-full md:w-1/4 lg:w-1/5">
+          <div className="sticky top-24">
+            <h2 className="font-headline text-2xl mb-4">Filter & Sort</h2>
+            <div className="relative mb-6">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+              <Input
+                type="text"
+                placeholder="Search products..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+            <ProductFilters
+              filters={filters}
+              setFilters={setFilters}
+              sortOrder={sortOrder}
+              setSortOrder={setSortOrder}
+              products={products}
             />
           </div>
-          <ProductFilters
-            filters={filters}
-            setFilters={setFilters}
-            sortOrder={sortOrder}
-            setSortOrder={setSortOrder}
-            products={products}
-          />
-        </div>
-      </aside>
-      <section className="w-full md:w-3/4 lg:w-4/5">
-        <h1 className="font-headline text-4xl mb-6">For Sale</h1>
-        {filteredAndSortedProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredAndSortedProducts.map((product: Product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-16 bg-card rounded-lg">
-            <h3 className="font-headline text-2xl">No Products Found</h3>
-            <p className="text-muted-foreground mt-2">Try adjusting your search or filter criteria.</p>
-          </div>
-        )}
-      </section>
-    </div>
+        </aside>
+        <section className="w-full md:w-3/4 lg:w-4/5">
+          <h2 className="font-headline text-4xl mb-6">For Sale</h2>
+          {filteredAndSortedProducts.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {filteredAndSortedProducts.map((product: Product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-16 bg-card rounded-lg">
+              <h3 className="font-headline text-2xl">No Products Found</h3>
+              <p className="text-muted-foreground mt-2">Try adjusting your search or filter criteria.</p>
+            </div>
+          )}
+        </section>
+      </div>
+    </>
   );
 }
