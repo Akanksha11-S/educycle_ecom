@@ -3,6 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { AppProviders } from '@/contexts/AppProviders';
 import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
   title: 'EduCycle',
@@ -27,6 +28,7 @@ export default function RootLayout({
           <main className="flex-grow container mx-auto px-4 py-8">
             {children}
           </main>
+          <Footer />
           <Toaster />
         </AppProviders>
       </body>
