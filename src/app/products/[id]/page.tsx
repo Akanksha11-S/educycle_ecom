@@ -20,16 +20,19 @@ export default function ProductDetailPage() {
   const { toast } = useToast();
   const router = useRouter();
 
-  const [product, setProduct] = useState<Product | null>(null);
+  const [product, setProduct] = useState<Product | undefined>(() => products.find((p: Product) => p.id === id));
 
   useEffect(() => {
     const foundProduct = products.find((p: Product) => p.id === id);
-    if(foundProduct) {
+    if (foundProduct) {
       setProduct(foundProduct);
     } else {
         // In a real app, you might show a 404 page
-        toast({ title: "Product not found", variant: "destructive" });
-        router.push('/');
+        // Adding a delay to ensure context is updated before showing toast
+        setTimeout(() => {
+            toast({ title: "Product not found", variant: "destructive" });
+            router.push('/');
+        }, 0);
     }
   }, [id, products, router, toast]);
 

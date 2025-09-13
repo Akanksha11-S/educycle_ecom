@@ -12,12 +12,25 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Bar, BarChart as RechartsBarChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from "recharts"
+import { useState, useEffect } from 'react';
 
 const SellerDashboard = () => {
     const { currentUser } = useAuth();
     const { products, deleteProduct } = useDataContext();
     const { toast } = useToast();
     const sellerProducts = products.filter((p: Product) => p.sellerId === currentUser?.id);
+    const [salesData, setSalesData] = useState<any[]>([]);
+
+    useEffect(() => {
+        setSalesData([
+            { name: "Jan", total: Math.floor(Math.random() * 400000) + 80000 },
+            { name: "Feb", total: Math.floor(Math.random() * 400000) + 80000 },
+            { name: "Mar", total: Math.floor(Math.random() * 400000) + 80000 },
+            { name: "Apr", total: Math.floor(Math.random() * 400000) + 80000 },
+            { name: "May", total: Math.floor(Math.random() * 400000) + 80000 },
+            { name: "Jun", total: Math.floor(Math.random() * 400000) + 80000 },
+        ]);
+    }, []);
 
     const handleDelete = (productId: string) => {
         if (window.confirm('Are you sure you want to delete this product?')) {
@@ -25,15 +38,6 @@ const SellerDashboard = () => {
             toast({ title: 'Product Deleted' });
         }
     };
-
-    const salesData = [
-        { name: "Jan", total: Math.floor(Math.random() * 400000) + 80000 },
-        { name: "Feb", total: Math.floor(Math.random() * 400000) + 80000 },
-        { name: "Mar", total: Math.floor(Math.random() * 400000) + 80000 },
-        { name: "Apr", total: Math.floor(Math.random() * 400000) + 80000 },
-        { name: "May", total: Math.floor(Math.random() * 400000) + 80000 },
-        { name: "Jun", total: Math.floor(Math.random() * 400000) + 80000 },
-    ]
 
     return (
         <Tabs defaultValue="listings">
@@ -85,14 +89,20 @@ const SellerDashboard = () => {
                         <CardDescription>Overview of your sales in the last 6 months.</CardDescription>
                     </CardHeader>
                     <CardContent className="pl-2">
-                        <ResponsiveContainer width="100%" height={350}>
-                            <RechartsBarChart data={salesData}>
-                                <XAxis dataKey="name" stroke="#888888" fontSize={12} tickLine={false} axisLine={false}/>
-                                <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `₹${value/1000}k`}/>
-                                <Tooltip formatter={(value: number) => `₹${value.toLocaleString('en-IN')}`}/>
-                                <Bar dataKey="total" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
-                            </RechartsBarChart>
-                        </ResponsiveContainer>
+                        {salesData.length > 0 ? (
+                            <ResponsiveContainer width="100%" height={350}>
+                                <RechartsBarChart data={salesData}>
+                                    <XAxis dataKey="name" stroke="#888888" fontSize={12} tickLine={false} axisLine={false}/>
+                                    <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `₹${value/1000}k`}/>
+                                    <Tooltip formatter={(value: number) => `₹${value.toLocaleString('en-IN')}`}/>
+                                    <Bar dataKey="total" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
+                                </RechartsBarChart>
+                            </ResponsiveContainer>
+                        ) : (
+                            <div className="flex justify-center items-center h-[350px]">
+                                <p>Loading analytics...</p>
+                            </div>
+                        )}
                     </CardContent>
                 </Card>
             </TabsContent>
