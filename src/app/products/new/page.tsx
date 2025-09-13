@@ -35,8 +35,9 @@ export default function NewProductPage() {
   const [isLoading, setIsLoading] = useState(false);
 
   if (!currentUser || currentUser.role !== 'seller') {
-    toast({ title: "Access Denied", description: "You must be a seller to list products.", variant: "destructive" });
-    router.push('/');
+    if (typeof window !== 'undefined') {
+        router.push('/');
+    }
     return null;
   }
 
