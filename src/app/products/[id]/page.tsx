@@ -105,6 +105,8 @@ export default function ProductDetailPage() {
         default: return 'secondary';
     }
   }
+  
+  const hasImages = product.imageUrls && product.imageUrls.length > 0;
 
   return (
     <>
@@ -112,28 +114,34 @@ export default function ProductDetailPage() {
       <CardContent className="p-4 md:p-8">
         <div className="grid md:grid-cols-2 gap-8">
           <div className="flex items-center justify-center bg-gray-100 rounded-lg p-4">
-             <Carousel className="w-full max-w-xs sm:max-w-sm">
-                <CarouselContent>
-                    {product.imageUrls.map((url, index) => (
-                        <CarouselItem key={index}>
-                            <Image
-                                src={url}
-                                alt={`${product.name} image ${index + 1}`}
-                                data-ai-hint={product.imageHint}
-                                width={600}
-                                height={500}
-                                className="rounded-lg object-contain aspect-[4/3] w-full"
-                            />
-                        </CarouselItem>
-                    ))}
-                </CarouselContent>
-                {product.imageUrls.length > 1 && (
-                    <>
-                        <CarouselPrevious />
-                        <CarouselNext />
-                    </>
-                )}
-            </Carousel>
+             {hasImages ? (
+                <Carousel className="w-full max-w-xs sm:max-w-sm">
+                    <CarouselContent>
+                        {product.imageUrls.map((url, index) => (
+                            <CarouselItem key={index}>
+                                <Image
+                                    src={url}
+                                    alt={`${product.name} image ${index + 1}`}
+                                    data-ai-hint={product.imageHint}
+                                    width={600}
+                                    height={500}
+                                    className="rounded-lg object-contain aspect-[4/3] w-full"
+                                />
+                            </CarouselItem>
+                        ))}
+                    </CarouselContent>
+                    {product.imageUrls.length > 1 && (
+                        <>
+                            <CarouselPrevious />
+                            <CarouselNext />
+                        </>
+                    )}
+                </Carousel>
+             ) : (
+                <div className="w-full h-full bg-muted flex items-center justify-center rounded-lg aspect-[4/3]">
+                    <span className="text-muted-foreground text-sm">No image</span>
+                </div>
+             )}
           </div>
           <div className="flex flex-col justify-center">
             <Badge variant="secondary" className="w-fit mb-2">{product.category}</Badge>
@@ -180,7 +188,9 @@ export default function ProductDetailPage() {
             </DialogHeader>
             <div className="space-y-4 py-4">
                 <div className="flex items-center gap-4">
-                    <Image src={product.imageUrls[0]} alt={product.name} width={80} height={80} className="rounded-md object-contain" />
+                    {hasImages && (
+                      <Image src={product.imageUrls[0]} alt={product.name} width={80} height={80} className="rounded-md object-contain" />
+                    )}
                     <div>
                         <h3 className="font-bold">{product.name}</h3>
                         <p className="text-sm text-muted-foreground">Sold by {product.sellerName}</p>

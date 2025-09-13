@@ -55,20 +55,24 @@ export default function ProductCard({ product, layout = 'vertical' }: ProductCar
     }
   }
 
+  const hasImages = product.imageUrls && product.imageUrls.length > 0;
+
   if (layout === 'horizontal') {
     return (
       <Link href={`/products/${product.id}`} className="group">
         <Card className="overflow-hidden transition-shadow duration-300 hover:shadow-xl">
           <div className="flex flex-col sm:flex-row">
             <div className="relative sm:w-1/3">
-              <Image
-                src={product.imageUrls[0]}
-                alt={product.name}
-                data-ai-hint={product.imageHint}
-                width={400}
-                height={300}
-                className="w-full h-48 sm:h-full object-cover"
-              />
+              {hasImages && (
+                <Image
+                  src={product.imageUrls[0]}
+                  alt={product.name}
+                  data-ai-hint={product.imageHint}
+                  width={400}
+                  height={300}
+                  className="w-full h-48 sm:h-full object-cover"
+                />
+              )}
               <Badge variant={conditionBadgeVariant(product.condition)} className="absolute top-2 right-2 capitalize">{product.condition}</Badge>
             </div>
             <div className="flex flex-col sm:w-2/3">
@@ -99,14 +103,20 @@ export default function ProductCard({ product, layout = 'vertical' }: ProductCar
     <Link href={`/products/${product.id}`} className="group">
       <Card className="h-full flex flex-col overflow-hidden transition-shadow duration-300 hover:shadow-xl">
         <CardHeader className="p-0 relative">
-          <Image
-            src={product.imageUrls[0]}
-            alt={product.name}
-            data-ai-hint={product.imageHint}
-            width={400}
-            height={300}
-            className="w-full h-48 object-contain"
-          />
+          {hasImages ? (
+            <Image
+              src={product.imageUrls[0]}
+              alt={product.name}
+              data-ai-hint={product.imageHint}
+              width={400}
+              height={300}
+              className="w-full h-48 object-contain"
+            />
+          ) : (
+            <div className="w-full h-48 bg-muted flex items-center justify-center">
+              <span className="text-muted-foreground text-sm">No image</span>
+            </div>
+          )}
           <Badge variant={conditionBadgeVariant(product.condition)} className="absolute top-2 right-2 capitalize">{product.condition}</Badge>
         </CardHeader>
         <CardContent className="p-4 flex-grow">
