@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useAuth } from '@/contexts/AuthContext';
@@ -9,11 +10,12 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useToast } from '@/hooks/use-toast';
-import { Users, IndianRupee, Package, CheckCircle, XCircle } from 'lucide-react';
+import { Users, IndianRupee, Package, CheckCircle, Eye } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
+import Link from 'next/link';
 
 const AdminReports = () => {
   const { users } = useAuth();
@@ -129,8 +131,15 @@ const AdminUserManagement = () => {
                                         <Badge variant="secondary">Not Verified</Badge>
                                     )}
                                 </TableCell>
-                                <TableCell className="text-right">
-                                    {user.role !== 'admin' && <Button variant="destructive" size="sm" onClick={() => handleDelete(user.id, user.name)}>Delete</Button>}
+                                <TableCell className="text-right space-x-2">
+                                    {user.role !== 'admin' && (
+                                        <>
+                                            <Button variant="outline" size="sm" asChild>
+                                                <Link href={`/dashboard?userId=${user.id}`}><Eye className="mr-1 h-4 w-4"/>View Dashboard</Link>
+                                            </Button>
+                                            <Button variant="destructive" size="sm" onClick={() => handleDelete(user.id, user.name)}>Delete</Button>
+                                        </>
+                                    )}
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -226,3 +235,4 @@ export default function AdminPage() {
     </div>
   );
 }
+    

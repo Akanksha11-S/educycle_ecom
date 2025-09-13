@@ -1,11 +1,12 @@
+
 "use client";
 
 import { useAuth } from '@/contexts/AuthContext';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ShoppingBag, DollarSign, List, BarChart, IndianRupee } from 'lucide-react';
+import { ShoppingBag, List, BarChart } from 'lucide-react';
 import type { Product } from '@/lib/types';
 import { useDataContext } from '@/contexts/DataContext';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -13,12 +14,12 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Bar, BarChart as RechartsBarChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from "recharts"
 import { useState, useEffect } from 'react';
+import type { User } from '@/lib/types';
 
-const SellerDashboard = () => {
-    const { currentUser } = useAuth();
+const SellerDashboard = ({ displayedUser }: { displayedUser: User }) => {
     const { products, deleteProduct } = useDataContext();
     const { toast } = useToast();
-    const sellerProducts = products.filter((p: Product) => p.sellerId === currentUser?.id);
+    const sellerProducts = products.filter((p: Product) => p.sellerId === displayedUser?.id);
     const [salesData, setSalesData] = useState<any[]>([]);
 
     useEffect(() => {
@@ -148,30 +149,49 @@ const BuyerDashboard = () => {
 
 
 export default function DashboardPage() {
-  const { currentUser } = useAuth();
+  const { currentUser, users } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const userId = searchParams.get('userId');
 
   if (!currentUser) {
     router.push('/login');
     return null; // Or a loading spinner
   }
 
-  const isSeller = currentUser.role === 'seller';
+  let displayedUser = currentUser;
+
+  // If an admin is viewing another user's dashboard
+  if (currentUser.role === 'admin' && userId) {
+      const foundUser = users.find(u => u.id === userId);
+      if(foundUser) {
+          displayedUser = foundUser;
+      }
+  }
+
+  const isSeller = displayedUser.role === 'seller';
+  const isAdminViewing = currentUser.role === 'admin' && currentUser.id !== displayedUser.id;
 
   return (
     <div className="space-y-8">
       <div className="flex items-center gap-4">
         <Avatar className="h-20 w-20">
-            <AvatarImage src={currentUser.avatarUrl} />
-            <AvatarFallback>{currentUser.name.charAt(0)}</AvatarFallback>
+            <AvatarImage src={displayedUser.avatarUrl} />
+            <AvatarFallback>{displayedUser.name.charAt(0)}</AvatarFallback>
         </Avatar>
         <div>
-            <h1 className="font-headline text-4xl">Welcome, {currentUser.name}</h1>
-            <p className="text-muted-foreground">Here is your dashboard overview.</p>
+            <h1 className="font-headline text-4xl">
+                {isAdminViewing ? `${displayedUser.name}'s Dashboard` : `Welcome, ${displayedUser.name}`}
+            </h1>
+            <p className="text-muted-foreground">
+                {isAdminViewing ? `You are viewing this page as an administrator.` : `Here is your dashboard overview.`}
+            </p>
         </div>
       </div>
       
-      {isSeller ? <SellerDashboard /> : <BuyerDashboard />}
+      {isSeller ? <SellerDashboard displayedUser={displayedUser}/> : <BuyerDashboard />}
     </div>
   );
 }
+
+    
