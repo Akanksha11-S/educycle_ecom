@@ -1,6 +1,5 @@
 "use client";
 
-import { useMemo } from 'react';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
@@ -12,18 +11,13 @@ interface ProductFiltersProps {
   setFilters: (filters: any) => void;
   sortOrder: string;
   setSortOrder: (order: string) => void;
-  products: Product[];
 }
 
-export default function ProductFilters({ filters, setFilters, sortOrder, setSortOrder, products }: ProductFiltersProps) {
+const productCategories = ["all", "Textbooks", "Calculators", "Engineering Graphic Materials", "Notebooks", "Other Accessories"];
+const conditions = ['all', 'new', 'used', 'refurbished'];
 
-  const categories = useMemo(() => {
-    const allCategories = products.map(p => p.category);
-    return ['all', ...Array.from(new Set(allCategories))];
-  }, [products]);
-  
-  const conditions = ['all', 'new', 'used', 'refurbished'];
-  const maxPrice = 50000;
+export default function ProductFilters({ filters, setFilters, sortOrder, setSortOrder }: ProductFiltersProps) {
+  const maxPrice = 20000;
 
   return (
     <div className="space-y-6">
@@ -48,7 +42,7 @@ export default function ProductFilters({ filters, setFilters, sortOrder, setSort
             <SelectValue placeholder="Select a category" />
           </SelectTrigger>
           <SelectContent>
-            {categories.map(cat => (
+            {productCategories.map(cat => (
               <SelectItem key={cat} value={cat} className="capitalize">{cat}</SelectItem>
             ))}
           </SelectContent>
@@ -60,14 +54,14 @@ export default function ProductFilters({ filters, setFilters, sortOrder, setSort
           <Slider
             min={0}
             max={maxPrice}
-            step={100}
+            step={500}
             value={filters.price}
             onValueChange={(value) => setFilters({ ...filters, price: value })}
             className="w-full"
           />
           <div className="flex justify-between text-sm text-muted-foreground mt-2">
             <span>₹{filters.price[0]}</span>
-            <span>₹{filters.price[1]}</span>
+            <span>₹{filters.price[1] > 2000 ? `₹${(filters.price[1]/1000).toFixed(1)}k` : `₹${filters.price[1]}`}</span>
           </div>
         </div>
       </div>

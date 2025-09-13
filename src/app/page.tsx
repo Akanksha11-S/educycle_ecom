@@ -42,7 +42,7 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filters, setFilters] = useState({
     category: 'all',
-    price: [0, 50000],
+    price: [0, 20000],
     condition: 'all',
   });
   const [sortOrder, setSortOrder] = useState('name-asc');
@@ -94,7 +94,6 @@ export default function Home() {
               setFilters={setFilters}
               sortOrder={sortOrder}
               setSortOrder={setSortOrder}
-              products={products}
             />
           </div>
         </aside>
@@ -104,7 +103,7 @@ export default function Home() {
             For Sale
           </h2>
           {filteredAndSortedProducts.length > 0 ? (
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
               {filteredAndSortedProducts.map((product: Product) => (
                 <ProductCard key={product.id} product={product} />
               ))}

@@ -13,6 +13,9 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
 import { ProductCondition } from '@/lib/types';
 import { Loader2 } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
+const productCategories = ["Textbooks", "Calculators", "Engineering Graphic Materials", "Notebooks", "Other Accessories"];
 
 export default function NewProductPage() {
   const { currentUser } = useAuth();
@@ -37,6 +40,10 @@ export default function NewProductPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!category) {
+        toast({ title: "Category is required", variant: "destructive" });
+        return;
+    }
     setIsLoading(true);
     // Simulate API call
     setTimeout(() => {
@@ -70,7 +77,16 @@ export default function NewProductPage() {
                 </div>
                  <div className="space-y-2">
                   <Label htmlFor="category">Category</Label>
-                  <Input id="category" required value={category} onChange={(e) => setCategory(e.target.value)} disabled={isLoading} />
+                  <Select onValueChange={setCategory} value={category} disabled={isLoading}>
+                    <SelectTrigger id="category">
+                        <SelectValue placeholder="Select a category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {productCategories.map(cat => (
+                            <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+                        ))}
+                    </SelectContent>
+                  </Select>
                 </div>
             </div>
              <div className="space-y-2">
