@@ -97,7 +97,7 @@ export default function ProductDetailPage() {
                 <div className="flex justify-between items-center">
                     <div>
                         <p className="text-muted-foreground">Price</p>
-                        <p className="text-4xl font-bold font-headline text-primary">${product.price.toFixed(2)}</p>
+                        <p className="text-4xl font-bold font-headline text-primary">₹{product.price.toFixed(2)}</p>
                     </div>
                     <div className="flex items-center gap-2">
                         <Button variant="outline" size="lg" onClick={handleToggleWishlist}>

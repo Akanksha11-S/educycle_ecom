@@ -13,7 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { ShoppingCart, Heart, LogOut, LayoutDashboard, User as UserIcon, LogIn, UserPlus, PackagePlus } from 'lucide-react';
+import { ShoppingCart, Heart, LogOut, LayoutDashboard, User as UserIcon, LogIn, UserPlus, PackagePlus, IndianRupee } from 'lucide-react';
 import Logo from './Logo';
 
 export default function Header() {

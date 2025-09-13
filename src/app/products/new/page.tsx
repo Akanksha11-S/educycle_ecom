@@ -65,7 +65,7 @@ export default function NewProductPage() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <Label htmlFor="price">Price ($)</Label>
+                  <Label htmlFor="price">Price (₹)</Label>
                   <Input id="price" type="number" required value={price} onChange={(e) => setPrice(Number(e.target.value))} disabled={isLoading} />
                 </div>
                  <div className="space-y-2">

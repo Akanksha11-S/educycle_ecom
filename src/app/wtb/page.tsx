@@ -70,7 +70,7 @@ const WtbForm = () => {
                             <Textarea id="description" value={description} onChange={e => setDescription(e.target.value)} className="col-span-3" required />
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="budget" className="text-right">Budget ($)</Label>
+                            <Label htmlFor="budget" className="text-right">Budget (₹)</Label>
                             <Input id="budget" type="number" value={budget} onChange={e => setBudget(Number(e.target.value))} className="col-span-3" required />
                         </div>
                     </div>
@@ -109,7 +109,7 @@ export default function WTBPage() {
                     <p>{req.description}</p>
                 </CardContent>
                 <CardFooter className='flex justify-between'>
-                    <p className="font-bold text-primary">Budget: ${req.budget.toFixed(2)}</p>
+                    <p className="font-bold text-primary">Budget: ₹{req.budget.toFixed(2)}</p>
                     <Button variant="outline">Contact Seller</Button>
                 </CardFooter>
             </Card>

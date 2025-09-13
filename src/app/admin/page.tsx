@@ -9,7 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useToast } from '@/hooks/use-toast';
-import { Users, DollarSign, Package } from 'lucide-react';
+import { Users, IndianRupee, Package } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 
@@ -18,9 +18,9 @@ const AdminReports = () => {
   const { products } = useDataContext();
 
   const revenueData = [
-    { name: "Jan", total: 2400 }, { name: "Feb", total: 1398 },
-    { name: "Mar", total: 9800 }, { name: "Apr", total: 3908 },
-    { name: "May", total: 4800 }, { name: "Jun", total: 3800 },
+    { name: "Jan", total: 192000 }, { name: "Feb", total: 111840 },
+    { name: "Mar", total: 784000 }, { name: "Apr", total: 312640 },
+    { name: "May", total: 384000 }, { name: "Jun", total: 304000 },
   ];
   
   const totalRevenue = revenueData.reduce((acc, item) => acc + item.total, 0);
@@ -31,10 +31,10 @@ const AdminReports = () => {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-              <DollarSign className="h-4 w-4 text-muted-foreground" />
+              <IndianRupee className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">${totalRevenue.toLocaleString()}</div>
+              <div className="text-2xl font-bold">₹{totalRevenue.toLocaleString('en-IN')}</div>
               <p className="text-xs text-muted-foreground">+20.1% from last month (mock data)</p>
             </CardContent>
           </Card>
@@ -68,8 +68,8 @@ const AdminReports = () => {
                 <ResponsiveContainer width="100%" height={350}>
                     <RechartsBarChart data={revenueData}>
                         <XAxis dataKey="name" stroke="#888888" fontSize={12} tickLine={false} axisLine={false}/>
-                        <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `$${value/1000}k`}/>
-                        <Tooltip cursor={{fill: 'hsl(var(--accent))'}} contentStyle={{backgroundColor: 'hsl(var(--background))'}}/>
+                        <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `₹${value/1000}k`}/>
+                        <Tooltip cursor={{fill: 'hsl(var(--accent))'}} contentStyle={{backgroundColor: 'hsl(var(--background))'}} formatter={(value: number) => `₹${value.toLocaleString('en-IN')}`}/>
                         <Bar dataKey="total" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
                     </RechartsBarChart>
                 </ResponsiveContainer>

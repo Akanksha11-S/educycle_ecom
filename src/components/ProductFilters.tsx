@@ -23,6 +23,7 @@ export default function ProductFilters({ filters, setFilters, sortOrder, setSort
   }, [products]);
   
   const conditions = ['all', 'new', 'used', 'refurbished'];
+  const maxPrice = 50000;
 
   return (
     <div className="space-y-6">
@@ -58,15 +59,15 @@ export default function ProductFilters({ filters, setFilters, sortOrder, setSort
         <div className="mt-4">
           <Slider
             min={0}
-            max={1000}
-            step={10}
+            max={maxPrice}
+            step={100}
             value={filters.price}
             onValueChange={(value) => setFilters({ ...filters, price: value })}
             className="w-full"
           />
           <div className="flex justify-between text-sm text-muted-foreground mt-2">
-            <span>${filters.price[0]}</span>
-            <span>${filters.price[1]}</span>
+            <span>₹{filters.price[0]}</span>
+            <span>₹{filters.price[1]}</span>
           </div>
         </div>
       </div>

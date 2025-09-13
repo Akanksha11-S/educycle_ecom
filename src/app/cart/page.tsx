@@ -17,6 +17,7 @@ export default function CartPage() {
   const { currentUser } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
+  const shippingCost = 100;
 
   if (!currentUser) {
     router.push('/login');
@@ -60,7 +61,7 @@ export default function CartPage() {
                 <div className="flex-grow">
                   <Link href={`/products/${item.id}`} className="font-bold hover:underline">{item.name}</Link>
                   <p className="text-sm text-muted-foreground">Sold by {item.sellerName}</p>
-                  <p className="text-lg font-headline text-primary mt-1">${item.price?.toFixed(2)}</p>
+                  <p className="text-lg font-headline text-primary mt-1">₹{item.price?.toFixed(2)}</p>
                 </div>
                 <div className="flex items-center gap-4">
                   <Input
@@ -86,20 +87,20 @@ export default function CartPage() {
             <CardContent className="space-y-4">
                 <div className="flex justify-between">
                     <span>Subtotal</span>
-                    <span>${getCartTotal().toFixed(2)}</span>
+                    <span>₹{getCartTotal().toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
                     <span>Shipping</span>
-                    <span>$5.00</span>
+                    <span>₹{shippingCost.toFixed(2)}</span>
                 </div>
                  <div className="flex justify-between">
                     <span>Taxes</span>
-                    <span>$0.00</span>
+                    <span>₹0.00</span>
                 </div>
                 <Separator />
                  <div className="flex justify-between font-bold text-lg">
                     <span>Total</span>
-                    <span>${(getCartTotal() + 5).toFixed(2)}</span>
+                    <span>₹{(getCartTotal() + shippingCost).toFixed(2)}</span>
                 </div>
             </CardContent>
             <CardFooter>

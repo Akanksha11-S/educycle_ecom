@@ -5,13 +5,13 @@ import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ShoppingBag, DollarSign, List, BarChart } from 'lucide-react';
+import { ShoppingBag, DollarSign, List, BarChart, IndianRupee } from 'lucide-react';
 import type { Product } from '@/lib/types';
 import { useDataContext } from '@/contexts/DataContext';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { Bar, BarChart as RechartsBarChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
+import { Bar, BarChart as RechartsBarChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from "recharts"
 
 const SellerDashboard = () => {
     const { currentUser } = useAuth();
@@ -27,12 +27,12 @@ const SellerDashboard = () => {
     };
 
     const salesData = [
-        { name: "Jan", total: Math.floor(Math.random() * 5000) + 1000 },
-        { name: "Feb", total: Math.floor(Math.random() * 5000) + 1000 },
-        { name: "Mar", total: Math.floor(Math.random() * 5000) + 1000 },
-        { name: "Apr", total: Math.floor(Math.random() * 5000) + 1000 },
-        { name: "May", total: Math.floor(Math.random() * 5000) + 1000 },
-        { name: "Jun", total: Math.floor(Math.random() * 5000) + 1000 },
+        { name: "Jan", total: Math.floor(Math.random() * 400000) + 80000 },
+        { name: "Feb", total: Math.floor(Math.random() * 400000) + 80000 },
+        { name: "Mar", total: Math.floor(Math.random() * 400000) + 80000 },
+        { name: "Apr", total: Math.floor(Math.random() * 400000) + 80000 },
+        { name: "May", total: Math.floor(Math.random() * 400000) + 80000 },
+        { name: "Jun", total: Math.floor(Math.random() * 400000) + 80000 },
     ]
 
     return (
@@ -61,7 +61,7 @@ const SellerDashboard = () => {
                                 {sellerProducts.length > 0 ? sellerProducts.map(p => (
                                     <TableRow key={p.id}>
                                         <TableCell className="font-medium">{p.name}</TableCell>
-                                        <TableCell>${p.price.toFixed(2)}</TableCell>
+                                        <TableCell>₹{p.price.toFixed(2)}</TableCell>
                                         <TableCell className="capitalize">{p.condition}</TableCell>
                                         <TableCell className="text-right">
                                             <Button variant="ghost" size="sm" onClick={() => alert('Edit feature coming soon!')}>Edit</Button>
@@ -88,7 +88,8 @@ const SellerDashboard = () => {
                         <ResponsiveContainer width="100%" height={350}>
                             <RechartsBarChart data={salesData}>
                                 <XAxis dataKey="name" stroke="#888888" fontSize={12} tickLine={false} axisLine={false}/>
-                                <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `$${value}`}/>
+                                <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `₹${value/1000}k`}/>
+                                <Tooltip formatter={(value: number) => `₹${value.toLocaleString('en-IN')}`}/>
                                 <Bar dataKey="total" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
                             </RechartsBarChart>
                         </ResponsiveContainer>
@@ -102,8 +103,8 @@ const SellerDashboard = () => {
 const BuyerDashboard = () => {
     // Mock data for purchase history
     const purchaseHistory = [
-        { id: 1, product: 'University Physics Vol. 1', date: '2023-05-20', price: 45.00 },
-        { id: 2, product: 'Used 2018 MacBook Air', date: '2023-04-12', price: 450.00 },
+        { id: 1, product: 'University Physics Vol. 1', date: '2023-05-20', price: 3600.00 },
+        { id: 2, product: 'Used 2018 MacBook Air', date: '2023-04-12', price: 36000.00 },
     ];
     return (
         <Card>
@@ -125,7 +126,7 @@ const BuyerDashboard = () => {
                             <TableRow key={item.id}>
                                 <TableCell className="font-medium">{item.product}</TableCell>
                                 <TableCell>{item.date}</TableCell>
-                                <TableCell className="text-right">${item.price.toFixed(2)}</TableCell>
+                                <TableCell className="text-right">₹{item.price.toFixed(2)}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

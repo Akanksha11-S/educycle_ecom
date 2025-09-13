@@ -13,26 +13,21 @@ import Link from 'next/link';
 const HeroSection = () => (
     <div className="text-center py-16 md:py-24 px-4 bg-card rounded-xl shadow-sm mb-12">
       <h1 
-        className="font-headline text-4xl md:text-6xl lg:text-7xl leading-tight mb-4 text-primary animate-in fade-in slide-in-from-top-4 duration-700"
+        className="font-headline text-4xl md:text-6xl lg:text-7xl leading-tight mb-4 text-primary"
       >
         Built by Engineers, for Engineers.
       </h1>
        <p 
-        className="text-2xl md:text-3xl font-light font-headline text-muted-foreground mb-8 animate-in fade-in slide-in-from-top-2 duration-700"
-        style={{ animationDelay: '200ms' }}
+        className="text-2xl md:text-3xl font-light font-headline text-muted-foreground mb-8"
       >
         Right Here on Campus.
       </p>
       <p 
-        className="max-w-3xl mx-auto text-muted-foreground mb-10 animate-in fade-in duration-700"
-        style={{ animationDelay: '400ms' }}
+        className="max-w-3xl mx-auto text-muted-foreground mb-10"
       >
         Welcome to EduCycle, the trusted peer-to-peer platform for our college community. Connect directly with verified students to buy the tools you need or sell the gear you're done with. No shipping, no strangers—just simple, safe exchanges for everything from drawing boards to complete Engineering Graphic kits. This is our campus circular economy.
       </p>
-      <div 
-        className="animate-in fade-in duration-700"
-        style={{ animationDelay: '600ms' }}
-      >
+      <div>
         <Button asChild size="lg">
           <Link href="#products">Start Browsing</Link>
         </Button>
@@ -46,7 +41,7 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filters, setFilters] = useState({
     category: 'all',
-    price: [0, 1000],
+    price: [0, 50000],
     condition: 'all',
   });
   const [sortOrder, setSortOrder] = useState('name-asc');

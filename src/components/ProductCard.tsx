@@ -72,7 +72,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           <p className="text-sm text-muted-foreground">Sold by {product.sellerName}</p>
         </CardContent>
         <CardFooter className="p-4 flex justify-between items-center">
-          <p className="text-xl font-bold font-headline text-primary">${product.price.toFixed(2)}</p>
+          <p className="text-xl font-bold font-headline text-primary">₹{product.price.toFixed(2)}</p>
           <div className="flex items-center gap-1">
              <Button variant="ghost" size="icon" onClick={handleToggleWishlist} className="h-9 w-9">
                 <Heart className={cn("h-5 w-5 text-muted-foreground", isInWishlist(product.id) ? 'fill-red-500 text-red-500' : '')} />
