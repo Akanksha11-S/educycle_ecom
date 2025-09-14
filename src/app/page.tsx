@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useMemo } from 'react';
@@ -54,22 +55,24 @@ export default function Home() {
       .filter((p: Product) => p.price >= filters.price[0] && p.price <= filters.price[1])
       .filter((p: Product) => filters.condition === 'all' || p.condition === filters.condition);
 
+    const sorted = [...filtered]; // Create a new array to sort
+
     switch (sortOrder) {
       case 'price-asc':
-        filtered.sort((a, b) => a.price - b.price);
+        sorted.sort((a, b) => a.price - b.price);
         break;
       case 'price-desc':
-        filtered.sort((a, b) => b.price - a.price);
+        sorted.sort((a, b) => b.price - a.price);
         break;
       case 'name-asc':
-        filtered.sort((a, b) => a.name.localeCompare(b.name));
+        sorted.sort((a, b) => a.name.localeCompare(b.name));
         break;
       case 'name-desc':
-        filtered.sort((a, b) => b.name.localeCompare(a.name));
+        sorted.sort((a, b) => b.name.localeCompare(a.name));
         break;
     }
 
-    return filtered;
+    return sorted;
   }, [products, searchTerm, filters, sortOrder]);
 
   return (
