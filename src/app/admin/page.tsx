@@ -10,12 +10,13 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useToast } from '@/hooks/use-toast';
-import { Users, IndianRupee, Package, CheckCircle, Eye } from 'lucide-react';
+import { Users, IndianRupee, Package, CheckCircle, Eye, ShoppingBag } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
 import Link from 'next/link';
+import { format } from 'date-fns';
 
 const AdminReports = () => {
   const { users } = useAuth();
@@ -204,6 +205,51 @@ const AdminUserVerification = () => {
     );
 };
 
+const AdminSalesHistory = () => {
+    const { sales } = useDataContext();
+    const { users } = useAuth();
+
+    const getSellerName = (sellerId: string) => users.find(u => u.id === sellerId)?.name || 'N/A';
+    const getBuyerName = (buyerId: string) => users.find(u => u.id === buyerId)?.name || 'N/A';
+
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle>Sales History</CardTitle>
+                <CardDescription>A complete log of all transactions on the platform.</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>Product</TableHead>
+                            <TableHead>Seller</TableHead>
+                            <TableHead>Buyer</TableHead>
+                            <TableHead>Date</TableHead>
+                            <TableHead className="text-right">Price</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {sales.length > 0 ? sales.map(sale => (
+                            <TableRow key={sale.id}>
+                                <TableCell className="font-medium">{sale.productName}</TableCell>
+                                <TableCell>{getSellerName(sale.sellerId)}</TableCell>
+                                <TableCell>{getBuyerName(sale.buyerId)}</TableCell>
+                                <TableCell>{format(new Date(sale.saleDate), "PP")}</TableCell>
+                                <TableCell className="text-right">₹{sale.price.toFixed(2)}</TableCell>
+                            </TableRow>
+                        )) : (
+                            <TableRow>
+                                <TableCell colSpan={5} className="text-center h-24">No sales have been made yet.</TableCell>
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
+            </CardContent>
+        </Card>
+    );
+}
+
 export default function AdminPage() {
   const { currentUser } = useAuth();
   const router = useRouter();
@@ -217,10 +263,11 @@ export default function AdminPage() {
     <div className="space-y-8">
       <h1 className="font-headline text-4xl">Admin Panel</h1>
       <Tabs defaultValue="reports">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="reports">Reports</TabsTrigger>
             <TabsTrigger value="users">User Management</TabsTrigger>
             <TabsTrigger value="verification">Verification</TabsTrigger>
+            <TabsTrigger value="sales"><ShoppingBag className="mr-2 h-4 w-4"/>Sales History</TabsTrigger>
         </TabsList>
         <TabsContent value="reports" className="mt-6">
             <AdminReports />
@@ -230,6 +277,9 @@ export default function AdminPage() {
         </TabsContent>
         <TabsContent value="verification" className="mt-6">
             <AdminUserVerification />
+        </TabsContent>
+        <TabsContent value="sales" className="mt-6">
+            <AdminSalesHistory />
         </TabsContent>
       </Tabs>
     </div>

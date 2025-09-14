@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { createContext, useContext, ReactNode, useState } from 'react';
@@ -23,6 +24,7 @@ interface DataContextType {
   wtbRequests: WtbRequest[];
   addWtbRequest: (request: Omit<WtbRequest, 'id' | 'userId' | 'userName' | 'createdAt'>, userId: string) => void;
   sales: Sale[];
+  addSale: (productId: string, buyerId: string) => void;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -39,7 +41,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useLocalStorage<CartItem[]>('cart', []);
   const [wishlist, setWishlist] = useLocalStorage<WishlistItem[]>('wishlist', []);
   const [wtbRequests, setWtbRequests] = useLocalStorage<WtbRequest[]>('wtb-requests', initialWtbRequests);
-  const [sales, setSales] = useLocalStorage<Sale[]>('sales', []); // Mock sales data
+  const [sales, setSales] = useLocalStorage<Sale[]>('sales', []);
 
   // Product Management
   const addProduct = (productData: Omit<Product, 'id' | 'sellerId' | 'sellerName'>, sellerId: string) => {
@@ -124,6 +126,26 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     };
     setWtbRequests(prev => [newRequest, ...prev]);
   };
+  
+  // Sales Management
+  const addSale = (productId: string, buyerId: string) => {
+    const product = products.find(p => p.id === productId);
+    const buyer = initialUsers.find(u => u.id === buyerId);
+    if (!product || !buyer) return;
+
+    const newSale: Sale = {
+        id: `sale-${Date.now()}`,
+        productId,
+        productName: product.name,
+        sellerId: product.sellerId,
+        buyerId,
+        saleDate: new Date().toISOString(),
+        price: product.price
+    };
+    setSales(prev => [newSale, ...prev]);
+    // After sale, remove product from list
+    deleteProduct(productId);
+  }
 
 
   return (
@@ -132,7 +154,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       cart, addToCart, removeFromCart, updateCartQuantity, getCartTotal,
       wishlist, toggleWishlist, isInWishlist,
       wtbRequests, addWtbRequest,
-      sales,
+      sales, addSale,
     }}>
       {children}
     </DataContext.Provider>

@@ -48,6 +48,7 @@ export type Sale = {
   id: string;
   productId: string;
   productName: string;
+  sellerId: string;
   buyerId: string;
   saleDate: string;
   price: number;

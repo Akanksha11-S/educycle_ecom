@@ -32,7 +32,7 @@ const SuccessAnimation = ({ onComplete }: { onComplete: () => void }) => {
 
 export default function ProductDetailPage() {
   const { id } = useParams();
-  const { products, addToCart, toggleWishlist, isInWishlist } = useDataContext();
+  const { products, addToCart, toggleWishlist, isInWishlist, addSale } = useDataContext();
   const { currentUser } = useAuth();
   const { toast } = useToast();
   const router = useRouter();
@@ -80,6 +80,9 @@ export default function ProductDetailPage() {
   }
 
   const handleConfirmPurchase = () => {
+      if(currentUser) {
+        addSale(product.id, currentUser.id);
+      }
       setShowOrderSummary(false);
       setShowSuccess(true);
   }
