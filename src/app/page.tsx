@@ -13,23 +13,26 @@ import Link from 'next/link';
 import { List } from 'lucide-react';
 
 const HeroSection = () => (
-    <div className="text-center py-16 md:py-24 px-4 bg-card rounded-xl shadow-sm mb-12">
+    <div className="text-center py-16 md:py-24 px-4 bg-card rounded-xl shadow-sm mb-12 overflow-hidden">
       <h1 
-        className="font-headline text-4xl md:text-6xl lg:text-7xl leading-tight mb-4 text-primary"
+        className="font-headline text-4xl md:text-6xl lg:text-7xl leading-tight mb-4 text-primary animate-fade-in-up"
+        style={{ animationDelay: '0.2s' }}
       >
         Built by Engineers, for Engineers.
       </h1>
        <p 
-        className="text-2xl md:text-3xl font-light font-headline text-muted-foreground mb-8"
+        className="text-2xl md:text-3xl font-light font-headline text-muted-foreground mb-8 animate-fade-in-up"
+        style={{ animationDelay: '0.4s' }}
       >
         Right Here on Campus.
       </p>
       <p 
-        className="max-w-3xl mx-auto text-muted-foreground mb-10"
+        className="max-w-3xl mx-auto text-muted-foreground mb-10 animate-fade-in-up"
+        style={{ animationDelay: '0.6s' }}
       >
         Welcome to EduCycle, the trusted peer-to-peer platform for our college community. Connect directly with verified students to buy the tools you need or sell the gear you're done with. No shipping, no strangers—just simple, safe exchanges for everything from drawing boards to complete Engineering Graphic kits. This is our campus circular economy.
       </p>
-      <div>
+      <div className="animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
         <Button asChild size="lg">
           <Link href="#products">Start Browsing</Link>
         </Button>
