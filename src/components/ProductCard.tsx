@@ -82,6 +82,7 @@ export default function ProductCard({ product, layout = 'vertical' }: ProductCar
               </CardHeader>
               <CardContent className="p-4 flex-grow">
                  <p className="text-sm text-muted-foreground">Sold by {product.sellerName}</p>
+                 <p className="text-xs text-muted-foreground">{product.sellerEmail}</p>
               </CardContent>
               <CardFooter className="p-4 flex justify-between items-center">
                 <p className="text-2xl font-bold font-headline text-primary">₹{product.price.toFixed(2)}</p>
@@ -124,6 +125,7 @@ export default function ProductCard({ product, layout = 'vertical' }: ProductCar
         <CardContent className="p-4 flex-grow">
           <CardTitle className="font-headline text-lg leading-tight mb-2 h-10 overflow-hidden">{product.name}</CardTitle>
           <p className="text-sm text-muted-foreground">Sold by {product.sellerName}</p>
+          <p className="text-xs text-muted-foreground">{product.sellerEmail}</p>
         </CardContent>
         <CardFooter className="p-4 flex justify-between items-center">
           <p className="text-xl font-bold font-headline text-primary">₹{product.price.toFixed(2)}</p>

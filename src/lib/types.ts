@@ -23,6 +23,7 @@ export type Product = {
   imageHint: string;
   sellerId: string;
   sellerName?: string; // Denormalized for convenience
+  sellerEmail?: string; // Denormalized for convenience
 };
 
 export type CartItem = {

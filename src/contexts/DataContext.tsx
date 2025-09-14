@@ -6,11 +6,11 @@ import useLocalStorage from '@/hooks/use-local-storage';
 import { Product, CartItem, WishlistItem, WtbRequest, Sale } from '@/lib/types';
 import { initialProducts } from '@/data/products';
 import { initialWtbRequests } from '@/data/wtb';
-import { initialUsers } from '@/data/users';
+import { useAuth } from './AuthContext';
 
 interface DataContextType {
   products: Product[];
-  addProduct: (product: Omit<Product, 'id' | 'sellerId' | 'sellerName'>, sellerId: string) => void;
+  addProduct: (product: Omit<Product, 'id' | 'sellerId' | 'sellerName' | 'sellerEmail'>, sellerId: string) => void;
   updateProduct: (product: Product) => void;
   deleteProduct: (productId: string) => void;
   cart: CartItem[];
@@ -29,28 +29,34 @@ interface DataContextType {
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
-const enrichProductsWithSellerName = (products: Product[]) => {
+const enrichProductsWithSellerInfo = (products: Product[], allUsers: any[]) => {
     return products.map(product => {
-        const seller = initialUsers.find(u => u.id === product.sellerId);
-        return { ...product, sellerName: seller?.name || 'Unknown' };
+        const seller = allUsers.find(u => u.id === product.sellerId);
+        return { 
+            ...product, 
+            sellerName: seller?.name || 'Unknown',
+            sellerEmail: seller?.email || 'N/A'
+        };
     });
 };
 
 export const DataProvider = ({ children }: { children: ReactNode }) => {
-  const [products, setProducts] = useLocalStorage<Product[]>('products', enrichProductsWithSellerName(initialProducts));
+  const { users } = useAuth();
+  const [products, setProducts] = useLocalStorage<Product[]>('products', enrichProductsWithSellerInfo(initialProducts, users));
   const [cart, setCart] = useLocalStorage<CartItem[]>('cart', []);
   const [wishlist, setWishlist] = useLocalStorage<WishlistItem[]>('wishlist', []);
-  const [wtbRequests, setWtbRequests] = useLocalStorage<WtbRequest[]>('wtb-requests', initialWtbRequests);
+  const [wtbRequests, setWtbRequests] = useLocalStorage<WtbRequest[]>('wtb-requests', initialWtbRequests.map(req => ({...req, userName: users.find(u => u.id === req.userId)?.name || 'Unknown' })));
   const [sales, setSales] = useLocalStorage<Sale[]>('sales', []);
 
   // Product Management
-  const addProduct = (productData: Omit<Product, 'id' | 'sellerId' | 'sellerName'>, sellerId: string) => {
-    const seller = initialUsers.find(u => u.id === sellerId);
+  const addProduct = (productData: Omit<Product, 'id' | 'sellerId' | 'sellerName' | 'sellerEmail'>, sellerId: string) => {
+    const seller = users.find(u => u.id === sellerId);
     const newProduct: Product = {
       ...productData,
       id: `prod-${Date.now()}`,
       sellerId,
       sellerName: seller?.name || 'Unknown',
+      sellerEmail: seller?.email || 'N/A',
     };
     setProducts(prev => [...prev, newProduct]);
   };
@@ -116,7 +122,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 
   // WTB Management
   const addWtbRequest = (requestData: Omit<WtbRequest, 'id' | 'userId' | 'userName' | 'createdAt'>, userId: string) => {
-    const user = initialUsers.find(u => u.id === userId);
+    const user = users.find(u => u.id === userId);
     const newRequest: WtbRequest = {
         ...requestData,
         id: `wtb-${Date.now()}`,
@@ -130,8 +136,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   // Sales Management
   const addSale = (productId: string, buyerId: string) => {
     const product = products.find(p => p.id === productId);
-    const buyer = initialUsers.find(u => u.id === buyerId);
-    if (!product || !buyer) return;
+    if (!product) return;
 
     const newSale: Sale = {
         id: `sale-${Date.now()}`,

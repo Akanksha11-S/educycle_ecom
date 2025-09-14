@@ -8,7 +8,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import { Heart, ShoppingCart, CheckCircle, X } from 'lucide-react';
+import { Heart, ShoppingCart, CheckCircle, Mail } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { Product } from '@/lib/types';
 import { useEffect, useState } from 'react';
@@ -156,7 +156,11 @@ export default function ProductDetailPage() {
                 <Badge variant={conditionBadgeVariant(product.condition)} className="capitalize">{product.condition}</Badge>
             </div>
             
-            <p className="text-sm text-muted-foreground mb-6">Sold by: {product.sellerName}</p>
+            <div className="text-sm text-muted-foreground mb-2">Sold by: {product.sellerName}</div>
+            <a href={`mailto:${product.sellerEmail}`} className="text-sm text-primary hover:underline flex items-center gap-2 mb-6">
+                <Mail className="h-4 w-4" /> {product.sellerEmail}
+            </a>
+
 
             <div className="bg-card p-6 rounded-lg border">
                 <div className="flex justify-between items-center mb-4">
