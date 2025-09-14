@@ -30,7 +30,7 @@ export const initialProducts: Product[] = [
     name: 'Used 2018 MacBook Air',
     description: '13-inch MacBook Air, 1.6GHz Intel Core i5, 8GB RAM, 128GB SSD. Good condition, some minor scratches on the case. Comes with charger.',
     price: 36000.00,
-    category: 'Electronics',
+    category: 'Other Accessories',
     condition: 'used',
     imageUrls: [
       'https://picsum.photos/seed/laptop1/600/400',
@@ -70,7 +70,7 @@ export const initialProducts: Product[] = [
     name: 'Adjustable Drafting Table',
     description: 'Solid wood drafting table with adjustable tilt. Perfect for art or architecture students. Minor paint stains.',
     price: 12000.00,
-    category: 'Furniture',
+    category: 'Engineering Graphic Materials',
     condition: 'used',
     imageUrls: ['https://picsum.photos/seed/drafting/600/400'],
     imageHint: 'drafting table',
