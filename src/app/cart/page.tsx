@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useDataContext } from '@/contexts/DataContext';
@@ -11,6 +12,7 @@ import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { Trash2, ShoppingBag } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import type { Product } from '@/lib/types';
 
 export default function CartPage() {
   const { cart, products, removeFromCart, updateCartQuantity, getCartTotal } = useDataContext();
@@ -26,8 +28,8 @@ export default function CartPage() {
   
   const cartProducts = cart.map(item => {
     const product = products.find(p => p.id === item.productId);
-    return { ...product, quantity: item.quantity };
-  }).filter(item => item.id);
+    return product ? { ...product, quantity: item.quantity } : null;
+  }).filter((item): item is Product & { quantity: number } => item !== null);
 
   const handleCheckout = () => {
     toast({
@@ -57,24 +59,24 @@ export default function CartPage() {
           {cartProducts.map(item => (
             <Card key={item.id} className="overflow-hidden">
               <CardContent className="p-4 flex flex-col sm:flex-row gap-4">
-                <div className="w-full sm:w-1/3 flex items-center justify-center bg-gray-50 rounded-md">
-                  <Image src={item.imageUrls![0]} alt={item.name!} width={200} height={150} className="rounded-md object-contain w-full h-auto" data-ai-hint={item.imageHint} />
+                <div className="w-full sm:w-1/4 flex items-center justify-center bg-gray-50 rounded-md">
+                  <Image src={item.imageUrls[0]} alt={item.name} width={150} height={150} className="rounded-md object-contain w-full h-auto" data-ai-hint={item.imageHint} />
                 </div>
                 <div className="flex-grow flex flex-col justify-between">
                   <div>
                     <Link href={`/products/${item.id}`} className="font-bold hover:underline">{item.name}</Link>
                     <p className="text-sm text-muted-foreground">Sold by {item.sellerName}</p>
-                    <p className="text-lg font-headline text-primary mt-1">₹{item.price?.toFixed(2)}</p>
+                    <p className="text-lg font-headline text-primary mt-1">₹{item.price.toFixed(2)}</p>
                   </div>
                   <div className="flex items-center justify-between mt-4">
                     <Input
                       type="number"
                       min="1"
                       value={item.quantity}
-                      onChange={(e) => updateCartQuantity(item.id!, parseInt(e.target.value))}
+                      onChange={(e) => updateCartQuantity(item.id, parseInt(e.target.value))}
                       className="w-20 text-center"
                     />
-                    <Button variant="ghost" size="icon" onClick={() => removeFromCart(item.id!)}>
+                    <Button variant="ghost" size="icon" onClick={() => removeFromCart(item.id)}>
                       <Trash2 className="h-5 w-5 text-destructive" />
                     </Button>
                   </div>
@@ -116,3 +118,4 @@ export default function CartPage() {
     </div>
   );
 }
+
