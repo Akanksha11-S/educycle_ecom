@@ -5,19 +5,19 @@ const faqData = {
     buying: [
         {
             q: "How do I buy an item?",
-            a: "You can either add items to your cart or use the 'Buy Now' button for a direct purchase. The 'Buy Now' option will take you to an order summary. All transactions are peer-to-peer, so you'll still need to contact the seller to arrange pickup and payment."
+            a: "You can either add items to your cart or use the 'Buy Now' button for a direct purchase. Both options will take you to a secure checkout process where the transaction is completed within the app. After purchase, you can coordinate with the seller for pickup."
         },
         {
             q: "How do I contact a seller?",
-            a: "The seller's email is listed on the product page. You should coordinate with the seller via email or other campus-approved channels to arrange a meeting and finalize the transaction."
+            a: "The seller's email is listed on the product page. You can use this to arrange a meeting for pickup after you have completed your purchase through the app."
         },
         {
             q: "Are there any fees for buying?",
-            a: "Yes, there is a small 5% platform fee added at checkout to help maintain the service. This will be clearly shown in your order summary before you confirm the purchase."
+            a: "Yes, there is a small 5% platform fee added at checkout to help maintain the service and ensure secure transactions. This will be clearly shown in your order summary before you confirm the purchase."
         },
         {
             q: "What is the 'Want to Buy' (WTB) board?",
-            a: "The WTB board is a place where you can post a request for an item you're looking for. Sellers who have that item can then see your post and contact you directly."
+            a: "The WTB board is a place where you can post a request for an item you're looking for. Sellers who have that item can then see your post and contact you directly to arrange a sale through the platform."
         }
     ],
     selling: [
@@ -31,17 +31,17 @@ const faqData = {
         },
         {
             q: "How do I get paid?",
-            a: "You arrange payment directly with the buyer. Agree on a method that is safe and convenient for both of you. The platform fee is handled at the time of purchase confirmation, but the item payment is between you and the buyer."
+            a: "Payment is processed securely through the app when a buyer purchases your item. The funds are then transferred to your account. This eliminates the need to handle cash or arrange direct payments with the buyer."
         }
     ],
     safety: [
         {
             q: "How do I stay safe during transactions?",
-            a: "Always meet in a public, well-lit place on campus. Check a user's verification status on their profile. Look for the green checkmark, which indicates they have been verified by an admin. See our 'Safety Measures' page for more tips."
+            a: "Always meet in a public, well-lit place on campus for item pickup. Check a user's verification status on their profile—look for the green checkmark. Since payments are handled in-app, you don't need to worry about carrying cash."
         },
         {
             q: "What if an item is not as described?",
-            a: "As all transactions are peer-to-peer, disputes must be resolved between the buyer and seller. We strongly encourage buyers to inspect items carefully before purchase, as all sales are considered final through the platform."
+            a: "We encourage buyers to inspect items carefully at pickup before confirming the exchange. If there is a significant issue, please contact our support team through the app. As sales are between peers, resolving disputes directly is often quickest, but we are here to help."
         }
     ]
 }

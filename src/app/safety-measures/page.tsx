@@ -3,34 +3,34 @@ import { ShieldCheck, MapPin, Search, MessageSquare, Banknote, UserCheck } from 
 
 const safetyMeasures = [
     {
+        icon: Banknote,
+        title: "Secure In-App Payments",
+        description: "All payments are processed securely through the app. Never exchange cash or use external payment methods. This protects both buyers and sellers from payment-related fraud."
+    },
+    {
         icon: MapPin,
-        title: "Meet in Public Places",
-        description: "Always arrange to meet in a busy, public location on campus. Good examples include the main library, student union, or a popular café during the daytime. Avoid secluded areas."
+        title: "Meet in Public for Pickup",
+        description: "For the physical exchange of items, always arrange to meet in a busy, public location on campus. Good examples include the main library, student union, or a popular café during the daytime."
     },
     {
         icon: UserCheck,
         title: "Check for Verification",
-        description: "Look for the green checkmark next to a user's name. This indicates they have been verified by an admin, adding a layer of trust to the transaction. Prioritize dealing with verified users."
+        description: "Look for the green checkmark next to a user's name. This indicates they have been verified by an admin, adding a layer of trust. Prioritize dealing with verified users."
     },
     {
         icon: Search,
-        title: "Inspect Before You Pay",
-        description: "Thoroughly inspect the item to ensure it matches the description and is in the condition you expect. For electronics, ask the seller to demonstrate that it's working."
+        title: "Inspect Before You Confirm",
+        description: "Thoroughly inspect the item during pickup to ensure it matches the description. For electronics, ask the seller to demonstrate that it's working before you finalize the exchange in the app."
     },
     {
         icon: MessageSquare,
-        title: "Communicate Clearly",
-        description: "Agree on the price and meeting details beforehand. Use on-campus communication methods if possible and avoid sharing unnecessary personal information."
-    },
-    {
-        icon: Banknote,
-        title: "Use Secure Payment Methods",
-        description: "For in-person exchanges, cash is often simplest. If using a payment app, confirm the transaction is complete before parting ways. Avoid sharing bank details."
+        title: "Communicate Within the App",
+        description: "Use the app's messaging system to communicate with the other party. This keeps a record of your conversation and helps protect your personal contact information."
     },
     {
         icon: ShieldCheck,
         title: "Trust Your Instincts",
-        description: "If a deal seems too good to be true or you feel uncomfortable for any reason, it's okay to walk away. Your safety is the top priority."
+        description: "If an offer seems too good to be true or you feel uncomfortable for any reason during the pickup arrangement, it's okay to cancel the transaction. Your safety is the top priority."
     }
 ];
 
@@ -41,7 +41,7 @@ export default function SafetyMeasuresPage() {
         <ShieldCheck className="mx-auto h-16 w-16 text-primary" />
         <h1 className="font-headline text-4xl mt-4">Transaction Safety Measures</h1>
         <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">
-            EduCycle is a peer-to-peer platform. Here are some important tips to ensure your transactions are safe and successful.
+            Your security is our priority. Follow these tips to ensure your transactions on EduCycle are safe and successful.
         </p>
       </div>
 
