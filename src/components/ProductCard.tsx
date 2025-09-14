@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useDataContext } from '@/contexts/DataContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Heart, ShoppingCart } from 'lucide-react';
@@ -76,9 +76,11 @@ export default function ProductCard({ product, layout = 'vertical' }: ProductCar
               <Badge variant={conditionBadgeVariant(product.condition)} className="absolute top-2 right-2 capitalize">{product.condition}</Badge>
             </div>
             <div className="flex flex-col sm:w-2/3">
-              <CardContent className="p-4 flex-grow">
+              <CardHeader>
                 <CardTitle className="font-headline text-lg leading-tight mb-2">{product.name}</CardTitle>
-                <p className="text-sm text-muted-foreground mb-2 line-clamp-2">{product.description}</p>
+                <CardDescription className="text-sm text-muted-foreground mb-2 line-clamp-2">{product.description}</CardDescription>
+              </CardHeader>
+              <CardContent className="p-4 flex-grow">
                  <p className="text-sm text-muted-foreground">Sold by {product.sellerName}</p>
               </CardContent>
               <CardFooter className="p-4 flex justify-between items-center">
