@@ -88,6 +88,18 @@ export const initialProducts: Product[] = [
     sellerId: 'user-2',
     sellerName: 'Bob',
   },
+  {
+    id: 'prod-20',
+    name: 'Texas Instruments TI-84 Plus CE',
+    description: 'Graphing calculator with a full-color display. Ideal for advanced math and science. Used but in great condition.',
+    price: 8000.00,
+    category: 'Calculators',
+    condition: 'used',
+    imageUrls: ['https://picsum.photos/seed/ti84/600/400'],
+    imageHint: 'graphing calculator',
+    sellerId: 'user-4',
+    sellerName: 'Diana',
+  },
   // Engineering Graphic Materials
   {
     id: 'prod-6',
@@ -174,6 +186,18 @@ export const initialProducts: Product[] = [
     sellerId: 'user-3',
     sellerName: 'Charlie',
   },
+  {
+    id: 'prod-21',
+    name: 'Rite in the Rain Weatherproof Notebook',
+    description: '3-pack of top-spiral notebooks. 3" x 5". All-weather paper that repels water, sweat, and grease.',
+    price: 1100.00,
+    category: 'Notebooks',
+    condition: 'new',
+    imageUrls: ['https://picsum.photos/seed/rainbook/600/400'],
+    imageHint: 'weatherproof notebook',
+    sellerId: 'user-2',
+    sellerName: 'Bob',
+  },
   // Other Accessories
   {
     id: 'prod-3',
@@ -226,5 +250,17 @@ export const initialProducts: Product[] = [
     imageHint: 'usb drive',
     sellerId: 'user-4',
     sellerName: 'Diana',
+  },
+  {
+    id: 'prod-22',
+    name: 'Anker PowerCore 10000 Portable Charger',
+    description: 'One of the smallest and lightest 10000mAh external batteries. Provides almost three-and-a-half iPhone 8 charges.',
+    price: 2500.00,
+    category: 'Other Accessories',
+    condition: 'used',
+    imageUrls: ['https://picsum.photos/seed/powerbank/600/400'],
+    imageHint: 'power bank',
+    sellerId: 'user-3',
+    sellerName: 'Charlie',
   },
 ];
