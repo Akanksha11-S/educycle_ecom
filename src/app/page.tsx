@@ -6,6 +6,7 @@ import { useDataContext } from '@/contexts/DataContext';
 import ProductCard from '@/components/ProductCard';
 import ProductFilters from '@/components/ProductFilters';
 import { Input } from '@/components/ui/input';
+import { Popover, PopoverContent, PopoverTrigger, PopoverAnchor } from '@/components/ui/popover';
 import { Search } from 'lucide-react';
 import type { Product } from '@/lib/types';
 import { Button } from '@/components/ui/button';
@@ -50,6 +51,11 @@ export default function Home() {
     condition: 'all',
   });
   const [sortOrder, setSortOrder] = useState('name-asc');
+  
+  const searchSuggestions = useMemo(() => {
+    if (!searchTerm) return [];
+    return products.filter((p: Product) => p.name.toLowerCase().includes(searchTerm.toLowerCase()));
+  }, [products, searchTerm]);
 
   const filteredAndSortedProducts = useMemo(() => {
     let filtered = products
@@ -77,6 +83,10 @@ export default function Home() {
 
     return sorted;
   }, [products, searchTerm, filters, sortOrder]);
+  
+  const handleSuggestionClick = (suggestionName: string) => {
+    setSearchTerm(suggestionName);
+  }
 
   return (
     <>
@@ -85,16 +95,40 @@ export default function Home() {
         <aside className="w-full md:w-1/3 lg:w-1/4">
           <div className="sticky top-24">
             <h2 className="font-headline text-2xl mb-4">Filter & Sort</h2>
-            <div className="relative mb-6">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-              <Input
-                type="text"
-                placeholder="Search products..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
-            </div>
+            
+            <Popover open={searchTerm.length > 0}>
+                <PopoverAnchor asChild>
+                    <div className="relative mb-6">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                        <Input
+                            type="text"
+                            placeholder="Search products..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="pl-10"
+                            autoComplete="off"
+                        />
+                    </div>
+                </PopoverAnchor>
+                <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
+                    {searchSuggestions.length > 0 ? (
+                        <div className="py-2">
+                        {searchSuggestions.slice(0, 5).map(suggestion => (
+                            <div
+                                key={suggestion.id}
+                                onClick={() => handleSuggestionClick(suggestion.name)}
+                                className="px-4 py-2 hover:bg-accent cursor-pointer text-sm"
+                            >
+                               {suggestion.name}
+                            </div>
+                        ))}
+                        </div>
+                    ) : (
+                        <p className="p-4 text-sm text-muted-foreground">No suggestions found.</p>
+                    )}
+                </PopoverContent>
+            </Popover>
+
             <ProductFilters
               filters={filters}
               setFilters={setFilters}
