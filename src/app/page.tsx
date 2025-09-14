@@ -43,7 +43,7 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filters, setFilters] = useState({
     category: 'all',
-    price: [0, 20000],
+    price: [0, 5000],
     condition: 'all',
   });
   const [sortOrder, setSortOrder] = useState('name-asc');

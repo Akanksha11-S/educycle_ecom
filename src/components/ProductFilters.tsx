@@ -17,7 +17,7 @@ const productCategories = ["all", "Textbooks", "Calculators", "Engineering Graph
 const conditions = ['all', 'new', 'used', 'refurbished'];
 
 export default function ProductFilters({ filters, setFilters, sortOrder, setSortOrder }: ProductFiltersProps) {
-  const maxPrice = 20000;
+  const maxPrice = 5000;
 
   return (
     <div className="space-y-6">
@@ -54,7 +54,7 @@ export default function ProductFilters({ filters, setFilters, sortOrder, setSort
           <Slider
             min={0}
             max={maxPrice}
-            step={500}
+            step={100}
             value={filters.price}
             onValueChange={(value) => setFilters({ ...filters, price: value })}
             className="w-full"
