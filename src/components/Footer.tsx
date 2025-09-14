@@ -53,7 +53,7 @@ const Footer = () => {
                             </li>
                              <li>
                                 <Button variant="link" asChild className="p-0 h-auto font-normal">
-                                    <Link href="/risk-management" className='flex items-center gap-2'><Shield className="h-4 w-4"/> Risk Management</Link>
+                                    <Link href="/safety-measures" className='flex items-center gap-2'><Shield className="h-4 w-4"/> Safety Measures</Link>
                                 </Button>
                             </li>
                         </ul>

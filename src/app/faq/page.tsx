@@ -5,21 +5,25 @@ const faqData = {
     buying: [
         {
             q: "How do I buy an item?",
-            a: "Simply browse the products, and when you find something you want, click the 'Add to Cart' button. You can then proceed to your cart to review your items. Contacting the seller is done outside the platform to arrange pickup and payment."
+            a: "You can either add items to your cart or use the 'Buy Now' button for a direct purchase. The 'Buy Now' option will take you to an order summary. All transactions are peer-to-peer, so you'll still need to contact the seller to arrange pickup and payment."
         },
         {
             q: "How do I contact a seller?",
-            a: "Currently, all transactions are finalized in person. After expressing interest, you should coordinate with the seller via campus-approved channels or in person to arrange a meeting."
+            a: "The seller's email is listed on the product page. You should coordinate with the seller via email or other campus-approved channels to arrange a meeting and finalize the transaction."
         },
         {
-            q: "What payment methods are accepted?",
-            a: "Payments are handled directly between the buyer and seller. We recommend using cash or a secure peer-to-peer payment app. EduCycle does not process payments."
+            q: "Are there any fees for buying?",
+            a: "Yes, there is a small 5% platform fee added at checkout to help maintain the service. This will be clearly shown in your order summary before you confirm the purchase."
+        },
+        {
+            q: "What is the 'Want to Buy' (WTB) board?",
+            a: "The WTB board is a place where you can post a request for an item you're looking for. Sellers who have that item can then see your post and contact you directly."
         }
     ],
     selling: [
         {
             q: "How do I list an item for sale?",
-            a: "You must be registered as a 'Seller'. Once logged in, use the 'Add Product' option from your user menu. Fill in the details, and your item will be listed on the marketplace."
+            a: "You must be registered as a 'Seller'. Once logged in, use the 'Add Product' option from your user menu. Fill in the details, upload at least one image, and your item will be listed on the marketplace."
         },
         {
             q: "What can I sell on EduCycle?",
@@ -27,24 +31,20 @@ const faqData = {
         },
         {
             q: "How do I get paid?",
-            a: "You arrange payment directly with the buyer. Agree on a method that is safe and convenient for both of you before you hand over the item."
+            a: "You arrange payment directly with the buyer. Agree on a method that is safe and convenient for both of you. The platform fee is handled at the time of purchase confirmation, but the item payment is between you and the buyer."
         }
     ],
     safety: [
         {
             q: "How do I stay safe during transactions?",
-            a: "Always meet in a public, well-lit place on campus, like the library lobby or a café. Never share personal financial information beyond what's necessary for the transaction. Inspect the item thoroughly before paying."
+            a: "Always meet in a public, well-lit place on campus. Check a user's verification status on their profile. Look for the green checkmark, which indicates they have been verified by an admin. See our 'Safety Measures' page for more tips."
         },
         {
             q: "What if an item is not as described?",
-            a: "As all transactions are peer-to-peer, disputes must be resolved between the buyer and seller. We strongly encourage buyers to inspect items carefully before purchase, as all sales are final."
+            a: "As all transactions are peer-to-peer, disputes must be resolved between the buyer and seller. We strongly encourage buyers to inspect items carefully before purchase, as all sales are considered final through the platform."
         }
     ]
 }
-
-const IconWrapper = ({ icon: Icon }: { icon: React.ElementType }) => (
-    <Icon className="h-5 w-5 text-primary mr-3" />
-);
 
 export default function FAQPage() {
   return (
