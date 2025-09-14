@@ -61,7 +61,7 @@ export default function ProductFilters({ filters, setFilters, sortOrder, setSort
           />
           <div className="flex justify-between text-sm text-muted-foreground mt-2">
             <span>₹{filters.price[0]}</span>
-            <span>₹{filters.price[1] > 2000 ? `₹${(filters.price[1]/1000).toFixed(1)}k` : `₹${filters.price[1]}`}</span>
+            <span>₹{filters.price[1]}</span>
           </div>
         </div>
       </div>
