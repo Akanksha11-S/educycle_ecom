@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useDataContext } from '@/contexts/DataContext';
@@ -7,6 +8,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from '@/components/ui/button';
 import { formatDistanceToNow } from 'date-fns';
 import type { WtbRequest } from '@/lib/types';
+import Link from 'next/link';
 
 import {
   Dialog,
@@ -86,7 +88,8 @@ const WtbForm = () => {
 
 export default function WTBPage() {
   const { wtbRequests } = useDataContext();
-  const { currentUser } = useAuth();
+  const { currentUser, users } = useAuth();
+  const getPosterEmail = (userId: string) => users.find(u => u.id === userId)?.email || '';
 
   return (
     <div>
@@ -110,7 +113,11 @@ export default function WTBPage() {
                 </CardContent>
                 <CardFooter className='flex justify-between'>
                     <p className="font-bold text-primary">Budget: ₹{req.budget.toFixed(2)}</p>
-                    <Button variant="outline">Contact Seller</Button>
+                     <Button variant="outline" asChild>
+                        <a href={`mailto:${getPosterEmail(req.userId)}?subject=Re: Your WTB post for "${req.title}"`}>
+                            Contact Poster
+                        </a>
+                    </Button>
                 </CardFooter>
             </Card>
             ))}
