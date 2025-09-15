@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useDataContext } from '@/contexts/DataContext';
@@ -9,13 +10,15 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import { Heart, ShoppingCart, CheckCircle, Mail } from 'lucide-react';
+import { Heart, ShoppingCart, CheckCircle, Mail, CreditCard } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { Product } from '@/lib/types';
 import { useEffect, useState } from 'react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
 import { Separator } from '@/components/ui/separator';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
 
 const SuccessAnimation = ({ onComplete }: { onComplete: () => void }) => {
     useEffect(() => {
@@ -192,7 +195,7 @@ export default function ProductDetailPage() {
         <DialogContent>
             <DialogHeader>
                 <DialogTitle className="font-headline text-2xl">Order Summary</DialogTitle>
-                <DialogDescription>Review your order before confirming.</DialogDescription>
+                <DialogDescription>Review your order and enter payment details to confirm.</DialogDescription>
             </DialogHeader>
             <div className="space-y-4 py-4">
                 <div className="flex items-center gap-4">
@@ -220,6 +223,24 @@ export default function ProductDetailPage() {
                         <span>₹{total.toFixed(2)}</span>
                     </div>
                 </div>
+                 <Separator />
+                <div className="space-y-4">
+                    <h3 className="text-lg font-semibold flex items-center gap-2"><CreditCard /> Payment Information</h3>
+                    <div className="space-y-2">
+                        <Label htmlFor="card-number">Card Number</Label>
+                        <Input id="card-number" placeholder="0000 0000 0000 0000" />
+                    </div>
+                    <div className="grid grid-cols-3 gap-4">
+                        <div className="space-y-2 col-span-2">
+                            <Label htmlFor="expiry">Expiration Date</Label>
+                            <Input id="expiry" placeholder="MM/YY" />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="cvc">CVC</Label>
+                            <Input id="cvc" placeholder="123" />
+                        </div>
+                    </div>
+                </div>
             </div>
             <DialogFooter>
                 <Button variant="ghost" onClick={() => setShowOrderSummary(false)}>Cancel</Button>
@@ -230,7 +251,7 @@ export default function ProductDetailPage() {
 
      <Dialog open={showSuccess} onOpenChange={setShowSuccess}>
         <DialogContent className="sm:max-w-md">
-            <SuccessAnimation onComplete={() => { setShowSuccess(false); router.push('/'); }} />
+            <SuccessAnimation onComplete={() => { setShowSuccess(false); router.push('/dashboard'); }} />
         </DialogContent>
     </Dialog>
     </>

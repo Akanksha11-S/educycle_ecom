@@ -10,16 +10,36 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
-import { Trash2, ShoppingBag } from 'lucide-react';
+import { Trash2, ShoppingBag, CheckCircle, CreditCard } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import type { Product } from '@/lib/types';
+import { useState, useEffect } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
+import { Label } from '@/components/ui/label';
+
+const SuccessAnimation = ({ onComplete }: { onComplete: () => void }) => {
+    useEffect(() => {
+        const timer = setTimeout(onComplete, 2000);
+        return () => clearTimeout(timer);
+    }, [onComplete]);
+
+    return (
+        <div className="flex flex-col items-center justify-center p-8">
+            <CheckCircle className="w-24 h-24 text-green-500 animate-pulse" />
+            <p className="mt-4 text-xl font-headline">Transaction Successful!</p>
+        </div>
+    );
+};
 
 export default function CartPage() {
-  const { cart, products, removeFromCart, updateCartQuantity, getCartTotal } = useDataContext();
+  const { cart, products, removeFromCart, updateCartQuantity, getCartTotal, addSale } = useDataContext();
   const { currentUser } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
   const shippingCost = 100;
+  
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   if (!currentUser) {
     router.push('/login');
@@ -31,11 +51,25 @@ export default function CartPage() {
     return product ? { ...product, quantity: item.quantity } : null;
   }).filter((item): item is Product & { quantity: number } => item !== null);
 
+  const subtotal = getCartTotal();
+  const total = subtotal + shippingCost;
+
   const handleCheckout = () => {
-    toast({
-        title: "Feature not implemented",
-        description: "The checkout process is for demonstration purposes only."
-    });
+    if (!currentUser) {
+        toast({ title: "Please log in", description: "You must be logged in to purchase items.", variant: "destructive" });
+        return;
+    }
+    setShowCheckout(true);
+  }
+
+  const handleConfirmPurchase = () => {
+      if(currentUser) {
+        cartProducts.forEach(product => {
+            addSale(product.id, currentUser.id);
+        })
+      }
+      setShowCheckout(false);
+      setShowSuccess(true);
   }
 
   if (cart.length === 0) {
@@ -52,6 +86,7 @@ export default function CartPage() {
   }
 
   return (
+    <>
     <div>
       <h1 className="font-headline text-4xl mb-8">Your Shopping Cart</h1>
       <div className="grid lg:grid-cols-3 gap-8">
@@ -93,7 +128,7 @@ export default function CartPage() {
             <CardContent className="space-y-4">
                 <div className="flex justify-between">
                     <span>Subtotal</span>
-                    <span>₹{getCartTotal().toFixed(2)}</span>
+                    <span>₹{subtotal.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
                     <span>Shipping</span>
@@ -106,7 +141,7 @@ export default function CartPage() {
                 <Separator />
                  <div className="flex justify-between font-bold text-lg">
                     <span>Total</span>
-                    <span>₹{(getCartTotal() + shippingCost).toFixed(2)}</span>
+                    <span>₹{total.toFixed(2)}</span>
                 </div>
             </CardContent>
             <CardFooter>
@@ -116,6 +151,64 @@ export default function CartPage() {
         </div>
       </div>
     </div>
+
+    <Dialog open={showCheckout} onOpenChange={setShowCheckout}>
+        <DialogContent>
+            <DialogHeader>
+                <DialogTitle className="font-headline text-2xl">Complete Your Purchase</DialogTitle>
+                <DialogDescription>Review your order and enter payment details.</DialogDescription>
+            </DialogHeader>
+            <div className="space-y-4 py-4">
+                <Card>
+                    <CardContent className="p-4 space-y-2">
+                        {cartProducts.map(item => (
+                             <div key={item.id} className="flex justify-between items-center text-sm">
+                                <span>{item.name} x {item.quantity}</span>
+                                <span>₹{(item.price * item.quantity).toFixed(2)}</span>
+                            </div>
+                        ))}
+                        <Separator />
+                        <div className="flex justify-between font-semibold">
+                            <span>Total</span>
+                            <span>₹{total.toFixed(2)}</span>
+                        </div>
+                    </CardContent>
+                </Card>
+
+                <Separator />
+                
+                <div className="space-y-4">
+                    <h3 className="text-lg font-semibold flex items-center gap-2"><CreditCard /> Payment Information</h3>
+                    <div className="space-y-2">
+                        <Label htmlFor="card-number">Card Number</Label>
+                        <Input id="card-number" placeholder="0000 0000 0000 0000" />
+                    </div>
+                    <div className="grid grid-cols-3 gap-4">
+                        <div className="space-y-2 col-span-2">
+                            <Label htmlFor="expiry">Expiration Date</Label>
+                            <Input id="expiry" placeholder="MM/YY" />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="cvc">CVC</Label>
+                            <Input id="cvc" placeholder="123" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <DialogFooter>
+                <Button variant="ghost" onClick={() => setShowCheckout(false)}>Cancel</Button>
+                <Button onClick={handleConfirmPurchase}>Confirm Purchase</Button>
+            </DialogFooter>
+        </DialogContent>
+    </Dialog>
+    
+    <Dialog open={showSuccess} onOpenChange={setShowSuccess}>
+        <DialogContent className="sm:max-w-md">
+            <SuccessAnimation onComplete={() => { setShowSuccess(false); router.push('/dashboard'); }} />
+        </DialogContent>
+    </Dialog>
+    </>
   );
 }
+
 
