@@ -13,7 +13,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Heart, ShoppingCart, CheckCircle, Mail, CreditCard } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { Product } from '@/lib/types';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
 import { Separator } from '@/components/ui/separator';
@@ -41,23 +41,18 @@ export default function ProductDetailPage() {
   const { toast } = useToast();
   const router = useRouter();
 
-  const [product, setProduct] = useState<Product | undefined>(undefined);
   const [showOrderSummary, setShowOrderSummary] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  
+  const product = useMemo(() => products.find((p: Product) => p.id === id), [id, products]);
 
   useEffect(() => {
-    const foundProduct = products.find((p: Product) => p.id === id);
-    if(product === undefined) setProduct(foundProduct);
-    
-    if (!foundProduct) {
-        setTimeout(() => {
-            if(!products.find((p: Product) => p.id === id)) {
-                toast({ title: "Product not found", variant: "destructive" });
-                router.push('/');
-            }
-        }, 500);
+    // If products have loaded and the product is still not found, redirect.
+    if (products.length > 0 && !product) {
+        toast({ title: "Product not found", variant: "destructive" });
+        router.push('/');
     }
-  }, [id, products, router, toast, product]);
+  }, [id, products, product, router, toast]);
   
   if (!product) {
     return <div className="text-center py-20 font-headline text-2xl">Loading product...</div>;
@@ -257,3 +252,4 @@ export default function ProductDetailPage() {
     </>
   );
 }
+
