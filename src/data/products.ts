@@ -14,6 +14,7 @@ export const initialProducts: Product[] = [
     imageHint: 'physics textbook',
     sellerId: 'user-2',
     sellerName: 'Bob',
+    sellerEmail: 'bob@example.com',
   },
   {
     id: 'prod-2',
@@ -26,6 +27,7 @@ export const initialProducts: Product[] = [
     imageHint: 'math textbook',
     sellerId: 'user-3',
     sellerName: 'Charlie',
+    sellerEmail: 'charlie@example.com',
   },
   {
     id: 'prod-4',
@@ -38,6 +40,7 @@ export const initialProducts: Product[] = [
     imageHint: 'chemistry textbook',
     sellerId: 'user-4',
     sellerName: 'Diana',
+    sellerEmail: 'diana@example.com',
   },
   // Calculators
   {
@@ -51,6 +54,7 @@ export const initialProducts: Product[] = [
     imageHint: 'scientific calculator',
     sellerId: 'user-2',
     sellerName: 'Bob',
+    sellerEmail: 'bob@example.com',
   },
   {
     id: 'prod-8',
@@ -63,6 +67,7 @@ export const initialProducts: Product[] = [
     imageHint: 'engineering calculator',
     sellerId: 'user-3',
     sellerName: 'Charlie',
+    sellerEmail: 'charlie@example.com',
   },
   {
     id: 'prod-9',
@@ -75,6 +80,7 @@ export const initialProducts: Product[] = [
     imageHint: 'hp calculator',
     sellerId: 'user-4',
     sellerName: 'Diana',
+    sellerEmail: 'diana@example.com',
   },
   {
     id: 'prod-17',
@@ -87,6 +93,7 @@ export const initialProducts: Product[] = [
     imageHint: 'scientific calculator',
     sellerId: 'user-2',
     sellerName: 'Bob',
+    sellerEmail: 'bob@example.com',
   },
   {
     id: 'prod-20',
@@ -99,6 +106,7 @@ export const initialProducts: Product[] = [
     imageHint: 'graphing calculator',
     sellerId: 'user-4',
     sellerName: 'Diana',
+    sellerEmail: 'diana@example.com',
   },
   // Engineering Graphic Materials
   {
@@ -112,6 +120,7 @@ export const initialProducts: Product[] = [
     imageHint: 'drafting table',
     sellerId: 'user-3',
     sellerName: 'Charlie',
+    sellerEmail: 'charlie@example.com',
   },
   {
     id: 'prod-10',
@@ -124,6 +133,7 @@ export const initialProducts: Product[] = [
     imageHint: 'drawing board',
     sellerId: 'user-2',
     sellerName: 'Bob',
+    sellerEmail: 'bob@example.com',
   },
   {
     id: 'prod-11',
@@ -136,6 +146,7 @@ export const initialProducts: Product[] = [
     imageHint: 'technical pencils',
     sellerId: 'user-4',
     sellerName: 'Diana',
+    sellerEmail: 'diana@example.com',
   },
   // Notebooks
   {
@@ -149,6 +160,7 @@ export const initialProducts: Product[] = [
     imageHint: 'spiral notebooks',
     sellerId: 'user-3',
     sellerName: 'Charlie',
+    sellerEmail: 'charlie@example.com',
   },
   {
     id: 'prod-13',
@@ -161,6 +173,7 @@ export const initialProducts: Product[] = [
     imageHint: 'hardcover notebook',
     sellerId: 'user-2',
     sellerName: 'Bob',
+    sellerEmail: 'bob@example.com',
   },
   {
     id: 'prod-14',
@@ -173,6 +186,7 @@ export const initialProducts: Product[] = [
     imageHint: 'black notebook',
     sellerId: 'user-4',
     sellerName: 'Diana',
+    sellerEmail: 'diana@example.com',
   },
   {
     id: 'prod-18',
@@ -185,6 +199,7 @@ export const initialProducts: Product[] = [
     imageHint: 'writing pads',
     sellerId: 'user-3',
     sellerName: 'Charlie',
+    sellerEmail: 'charlie@example.com',
   },
   {
     id: 'prod-21',
@@ -197,6 +212,7 @@ export const initialProducts: Product[] = [
     imageHint: 'weatherproof notebook',
     sellerId: 'user-2',
     sellerName: 'Bob',
+    sellerEmail: 'bob@example.com',
   },
   // Other Accessories
   {
@@ -214,6 +230,7 @@ export const initialProducts: Product[] = [
     imageHint: 'laptop computer',
     sellerId: 'user-2',
     sellerName: 'Bob',
+    sellerEmail: 'bob@example.com',
   },
   {
     id: 'prod-15',
@@ -226,6 +243,7 @@ export const initialProducts: Product[] = [
     imageHint: 'keyboard mouse',
     sellerId: 'user-3',
     sellerName: 'Charlie',
+    sellerEmail: 'charlie@example.com',
   },
   {
     id: 'prod-16',
@@ -238,6 +256,7 @@ export const initialProducts: Product[] = [
     imageHint: 'laptop stand',
     sellerId: 'user-4',
     sellerName: 'Diana',
+    sellerEmail: 'diana@example.com',
   },
   {
     id: 'prod-19',
@@ -250,6 +269,7 @@ export const initialProducts: Product[] = [
     imageHint: 'usb drive',
     sellerId: 'user-4',
     sellerName: 'Diana',
+    sellerEmail: 'diana@example.com',
   },
   {
     id: 'prod-22',
@@ -262,5 +282,6 @@ export const initialProducts: Product[] = [
     imageHint: 'power bank',
     sellerId: 'user-3',
     sellerName: 'Charlie',
+    sellerEmail: 'charlie@example.com',
   },
 ];
