@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { AppProviders } from '@/contexts/AppProviders';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import AdvertisementBanner from '@/components/AdvertisementBanner';
 
 export const metadata: Metadata = {
   title: 'EduCycle',
@@ -28,6 +29,7 @@ export default function RootLayout({
           <main className="flex-grow container mx-auto px-4 py-8">
             {children}
           </main>
+          <AdvertisementBanner />
           <Footer />
           <Toaster />
         </AppProviders>
