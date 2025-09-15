@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import React, { createContext, useContext, ReactNode, useState } from 'react';
@@ -18,6 +19,7 @@ interface DataContextType {
   removeFromCart: (productId: string) => void;
   updateCartQuantity: (productId: string, quantity: number) => void;
   getCartTotal: () => number;
+  clearCart: () => void;
   wishlist: WishlistItem[];
   toggleWishlist: (productId: string) => void;
   isInWishlist: (productId: string) => boolean;
@@ -103,6 +105,10 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       return total + (product ? product.price * item.quantity : 0);
     }, 0);
   };
+  
+  const clearCart = () => {
+      setCart([]);
+  }
 
 
   // Wishlist Management
@@ -156,7 +162,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   return (
     <DataContext.Provider value={{
       products, addProduct, updateProduct, deleteProduct,
-      cart, addToCart, removeFromCart, updateCartQuantity, getCartTotal,
+      cart, addToCart, removeFromCart, updateCartQuantity, getCartTotal, clearCart,
       wishlist, toggleWishlist, isInWishlist,
       wtbRequests, addWtbRequest,
       sales, addSale,

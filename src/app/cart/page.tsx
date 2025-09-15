@@ -32,7 +32,7 @@ const SuccessAnimation = ({ onComplete }: { onComplete: () => void }) => {
 };
 
 export default function CartPage() {
-  const { cart, products, removeFromCart, updateCartQuantity, getCartTotal, addSale } = useDataContext();
+  const { cart, products, removeFromCart, updateCartQuantity, getCartTotal, addSale, clearCart } = useDataContext();
   const { currentUser } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
@@ -68,6 +68,7 @@ export default function CartPage() {
             addSale(product.id, currentUser.id);
         })
       }
+      clearCart();
       setShowCheckout(false);
       setShowSuccess(true);
   }
@@ -89,7 +90,7 @@ export default function CartPage() {
     <>
     <div>
       <h1 className="font-headline text-4xl mb-8">Your Shopping Cart</h1>
-      <div className="grid lg:grid-cols-3 gap-8">
+      <div className="grid lg:grid-cols-3 gap-8 items-start">
         <div className="lg:col-span-2 space-y-4">
           {cartProducts.map(item => (
             <Card key={item.id} className="overflow-hidden">
@@ -126,7 +127,7 @@ export default function CartPage() {
             </Card>
           ))}
         </div>
-        <div className="lg:col-span-1">
+        <div className="lg:col-span-1 sticky top-24">
           <Card>
             <CardHeader>
               <CardTitle className="font-headline text-2xl">Order Summary</CardTitle>
