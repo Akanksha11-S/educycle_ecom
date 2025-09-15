@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
-import { Trash2, ShoppingBag, CheckCircle, CreditCard } from 'lucide-react';
+import { Trash2, ShoppingBag, CheckCircle, CreditCard, ImageOff } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import type { Product } from '@/lib/types';
 import { useState, useEffect } from 'react';
@@ -94,8 +94,14 @@ export default function CartPage() {
           {cartProducts.map(item => (
             <Card key={item.id} className="overflow-hidden">
               <CardContent className="p-4 flex flex-col sm:flex-row gap-4">
-                <div className="w-full sm:w-1/4 flex items-center justify-center bg-gray-50 rounded-md">
-                  <Image src={item.imageUrls[0]} alt={item.name} width={150} height={150} className="rounded-md object-contain w-full h-auto" data-ai-hint={item.imageHint} />
+                <div className="w-full sm:w-1/4 flex items-center justify-center bg-gray-50 rounded-md p-2">
+                  {item.imageUrls && item.imageUrls.length > 0 ? (
+                    <Image src={item.imageUrls[0]} alt={item.name} width={150} height={150} className="rounded-md object-contain w-full h-auto" data-ai-hint={item.imageHint} />
+                  ) : (
+                    <div className="w-full h-32 bg-muted flex items-center justify-center rounded-lg">
+                      <ImageOff className="h-8 w-8 text-muted-foreground" />
+                    </div>
+                  )}
                 </div>
                 <div className="flex-grow flex flex-col justify-between">
                   <div>
@@ -210,6 +216,3 @@ export default function CartPage() {
     </>
   );
 }
-
-
-
