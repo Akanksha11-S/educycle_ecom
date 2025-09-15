@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Megaphone } from 'lucide-react';
+import Link from "next/link";
 
 const AdvertisementBanner = () => {
     return (
@@ -15,8 +16,8 @@ const AdvertisementBanner = () => {
                             <p className="opacity-90 max-w-lg">Want to sell your items faster? Get them featured on our homepage and reach more buyers today.</p>
                         </div>
                     </div>
-                    <Button variant="secondary" size="lg" className="flex-shrink-0">
-                        Learn More
+                    <Button variant="secondary" size="lg" className="flex-shrink-0" asChild>
+                        <Link href="/promote-listings">Learn More</Link>
                     </Button>
                 </CardContent>
             </Card>
