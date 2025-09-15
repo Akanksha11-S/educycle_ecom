@@ -24,7 +24,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useState } from 'react';
-import { PlusCircle } from 'lucide-react';
+import { PlusCircle, Mail } from 'lucide-react';
 
 const WtbForm = () => {
     const { addWtbRequest } = useDataContext();
@@ -105,19 +105,21 @@ export default function WTBPage() {
                 <CardHeader>
                     <CardTitle className="font-headline text-2xl">{req.title}</CardTitle>
                     <CardDescription>
-                        Posted by {req.userName} - {formatDistanceToNow(new Date(req.createdAt), { addSuffix: true })}
+                         Posted {formatDistanceToNow(new Date(req.createdAt), { addSuffix: true })}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
                     <p>{req.description}</p>
                 </CardContent>
-                <CardFooter className='flex justify-between'>
+                <CardFooter className='flex justify-between items-center'>
                     <p className="font-bold text-primary">Budget: ₹{req.budget.toFixed(2)}</p>
-                     <Button variant="outline" asChild>
-                        <a href={`mailto:${getPosterEmail(req.userId)}?subject=Re: Your WTB post for "${req.title}"`}>
-                            Contact Poster
+                    <div className="text-right text-sm">
+                        <p className='font-semibold'>{req.userName}</p>
+                        <a href={`mailto:${getPosterEmail(req.userId)}`} className="text-muted-foreground hover:underline flex items-center gap-1">
+                            <Mail className="h-3 w-3" />
+                            {getPosterEmail(req.userId)}
                         </a>
-                    </Button>
+                    </div>
                 </CardFooter>
             </Card>
             ))}
