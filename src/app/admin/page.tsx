@@ -117,7 +117,6 @@ const AdminUserManagement = () => {
                             <TableRow key={user.id}>
                                 <TableCell className="flex items-center gap-2 font-medium">
                                     <Avatar className="h-8 w-8">
-                                        <AvatarImage src={user.avatarUrl} />
                                         <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
                                     </Avatar>
                                     {user.name}
@@ -188,7 +187,7 @@ const AdminUserVerification = () => {
                                         </Label>
                                         <Switch
                                             id={`verify-${user.id}`}
-                                            checked={user.isVerified}
+                                            checked={!!user.isVerified}
                                             onCheckedChange={(checked) => handleVerificationChange(user.id, user.name, checked)}
                                         />
                                       </div>
@@ -285,4 +284,3 @@ export default function AdminPage() {
     </div>
   );
 }
-    

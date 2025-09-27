@@ -6,7 +6,6 @@ export type User = {
   email: string;
   password?: string; // Should not be stored in frontend state in a real app
   role: UserRole;
-  avatarUrl: string;
   isVerified?: boolean;
 };
 

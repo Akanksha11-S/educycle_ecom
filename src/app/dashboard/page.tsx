@@ -176,7 +176,6 @@ export default function DashboardPage() {
     <div className="space-y-8">
       <div className="flex items-center gap-4">
         <Avatar className="h-20 w-20">
-            <AvatarImage src={displayedUser.avatarUrl} />
             <AvatarFallback>{displayedUser.name.charAt(0)}</AvatarFallback>
         </Avatar>
         <div>
@@ -193,5 +192,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-
-    

@@ -7,7 +7,6 @@ export const initialUsers: User[] = [
     email: 'akanksha158@gmail.com',
     password: 'password123',
     role: 'admin',
-    avatarUrl: 'https://picsum.photos/seed/akanksha/100/100',
     isVerified: true,
   },
   {
@@ -16,7 +15,6 @@ export const initialUsers: User[] = [
     email: 'bob@example.com',
     password: 'password123',
     role: 'seller',
-    avatarUrl: 'https://picsum.photos/seed/bob/100/100',
     isVerified: true,
   },
   {
@@ -25,7 +23,6 @@ export const initialUsers: User[] = [
     email: 'charlie@example.com',
     password: 'password123',
     role: 'seller',
-    avatarUrl: 'https://picsum.photos/seed/charlie/100/100',
     isVerified: false,
   },
   {
@@ -34,7 +31,6 @@ export const initialUsers: User[] = [
     email: 'diana@example.com',
     password: 'password123',
     role: 'buyer',
-    avatarUrl: 'https://picsum.photos/seed/diana/100/100',
     isVerified: true,
   },
 ];

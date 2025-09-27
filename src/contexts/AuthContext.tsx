@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
@@ -47,7 +48,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       email,
       password,
       role,
-      avatarUrl: `https://picsum.photos/seed/${name}/100/100`,
       isVerified: false,
     };
     setUsers([...users, newUser]);
